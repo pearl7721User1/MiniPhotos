@@ -18,11 +18,7 @@ class PHAssetsProvider {
     
     private(set) var allMomentsFetchResult: PHFetchResult<PHAsset>
     
-    init() throws {
-        
-        guard PHPhotoLibrary.authorizationStatus() == .authorized else {
-            throw PHAssetsProviderError.notAuthorized
-        }
+    init() {
         
         // PHFetchOptions of creationDate ascending
         let creationDateFetchOption: PHFetchOptions = {

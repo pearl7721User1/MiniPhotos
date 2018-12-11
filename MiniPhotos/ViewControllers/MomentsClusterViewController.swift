@@ -22,7 +22,6 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.showNotPermittedView(show: false)
         collectionView.collectionViewType = .MomentsCluster
 /*
         // fetch all moments

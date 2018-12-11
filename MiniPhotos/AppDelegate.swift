@@ -7,13 +7,13 @@
 //
 
 import UIKit
+import Photos
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var momentsNavigationController: MomentsClusterNavigationController!
-
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -21,6 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         momentsNavigationController = MomentsClusterNavigationController.newInstanceWithMomentsViewController()
         window?.rootViewController = momentsNavigationController
+        
+        if (PHPhotoLibrary.authorizationStatus() == .authorized) {
+            momentsNavigationController.initDataSourceProvider()
+            
+            // send notification
+            NotificationCenter.default.post(name: Notification.Name("PHAssetsLoaded"), object: nil)
+        }
+        
         
         return true
     }
@@ -47,6 +55,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    
 }
 
+extension AppDelegate {
+    func askPhotosAccessPerission() {
+        
+        PHPhotoLibrary.requestAuthorization { (status) in
+            if status == .authorized {
+                self.momentsNavigationController.initDataSourceProvider()
+                
+                // send notification
+                NotificationCenter.default.post(name: Notification.Name("PHAssetsLoaded"), object: nil)
+            }
+        }
+        
+    }
+}

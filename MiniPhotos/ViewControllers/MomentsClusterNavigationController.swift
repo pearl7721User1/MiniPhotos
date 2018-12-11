@@ -15,12 +15,7 @@ class MomentsClusterNavigationController: UINavigationController {
     
     func initDataSourceProvider() {
         
-        if let p = try? PHAssetsProvider() {
-            self.dataSourceProvider = p
-        } else {
-            
-        }
-        
+        self.dataSourceProvider = PHAssetsProvider()
     }
     
     static func newInstanceWithMomentsViewController() -> MomentsClusterNavigationController {

@@ -10,11 +10,7 @@ import UIKit
 
 class MomentsCommonCollectionView: UICollectionView {
 
-    private var notPermittedView = ViewForPermissionUnavailable()
-    
-    func showNotPermittedView(show: Bool) {
-        notPermittedView.isHidden = !show
-    }
+    private var noAnyContentsAvailableView = ViewForPermissionUnavailable()
     
     enum CollectionViewType: Int {
         case MomentsCluster, Moments
@@ -43,13 +39,20 @@ class MomentsCommonCollectionView: UICollectionView {
         self.collectionViewLayout = flowLayout
         
         // add unavailability view
-        self.addSubview(notPermittedView)
+        self.addSubview(noAnyContentsAvailableView)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(hideNoAnyContentsAvailableView), name: Notification.Name("PHAssetsLoaded"), object: nil)
+        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        notPermittedView.frame = self.bounds
+        noAnyContentsAvailableView.frame = self.bounds
+    }
+    
+    @objc func hideNoAnyContentsAvailableView() {
+        noAnyContentsAvailableView.removeFromSuperview()
     }
     
     
