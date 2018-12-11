@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class MomentsClusterViewController: UIViewController, UICollectionViewDataSource {
+class MomentsClusterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     private var dataSource: [MomentsClusterDataSourceElement]!
     private var imageCache = NSCache<NSString, UIImage>()
@@ -23,32 +23,12 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         super.viewDidLoad()
         
         collectionView.collectionViewType = .MomentsCluster
-/*
-        // fetch all moments
-        (self.navigationController as! MomentsClusterNavigationController).initDataSourceProvider()
-*/
+
+        
         // create data source
-        dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider.momentsClusterDataSource()
+        self.populatePhotosIfDataSourceIsAvailable()
         
-        // create image cache
-        let requestOptions = PHImageRequestOptions()
-        requestOptions.deliveryMode = .opportunistic
-        requestOptions.resizeMode = .fast
-        requestOptions.isSynchronous = true
-        
-        // iterate data source
-        for dataSourceElement in dataSource! {
-            for phasset in dataSourceElement.phAssets {
-                
-                PHImageManager().requestImage(for: phasset, targetSize: self.collectionView.thumbnailSize(), contentMode: .aspectFill, options: requestOptions, resultHandler: { image, _ in
-                    
-                    if let image = image {
-                        self.imageCache.setObject(image, forKey: phasset.localIdentifier as NSString)
-                    }
-                })
-            }
-        }
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(populatePhotosIfDataSourceIsAvailable), name: Notification.Name("PHAssetsLoaded"), object: nil)
         
 
     }
@@ -133,4 +113,42 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        <#code#>
+    }
+}
+
+extension MomentsClusterViewController {
+    @objc fileprivate func populatePhotosIfDataSourceIsAvailable() {
+        
+        self.dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider?.momentsClusterDataSource()
+        
+        if self.dataSource != nil {
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+            
+            self.collectionView.noAnyContentsAvailableView.isHidden = true
+            
+            // request all thumbnail images to cache them
+            let requestOptions = PHImageRequestOptions()
+            requestOptions.deliveryMode = .opportunistic
+            requestOptions.resizeMode = .fast
+            requestOptions.isSynchronous = true
+            
+            // iterate data source
+            for dataSourceElement in self.dataSource! {
+                for phasset in dataSourceElement.phAssets {
+                    
+                    PHImageManager().requestImage(for: phasset, targetSize: self.collectionView.thumbnailSize(), contentMode: .aspectFill, options: requestOptions, resultHandler: { image, _ in
+                        
+                        if let image = image {
+                            self.imageCache.setObject(image, forKey: phasset.localIdentifier as NSString)
+                        }
+                    })
+                }
+            }
+        }
+    }
 }

@@ -11,10 +11,12 @@ import Photos
 
 class MomentsViewController: UIViewController, UICollectionViewDataSource {
 
-    private var dataSource: [MomentsDataSourceElement]!
+    private var dataSource: [MomentsDataSourceElement]?
     
     // collection view for displaying the asset thumbnails
     @IBOutlet weak var collectionView: MomentsCommonCollectionView!
+    
+    private var viewDidLayoutSubviewsForTheFirstTime = true
     
     // MARK: - View Cycle
     required init?(coder aDecoder: NSCoder) {
@@ -25,14 +27,16 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //
+        (UIApplication.shared.delegate as! AppDelegate).askPhotosAccessPerission()
+        
+        
         collectionView.collectionViewType = .Moments
         
-        // fetch all moments
-        (self.navigationController as! MomentsClusterNavigationController).initDataSourceProvider()
-        
         // create data source
-        dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider.momentsDataSource()
+        self.populatePhotosIfDataSourceIsAvailable()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(populatePhotosIfDataSourceIsAvailable), name: Notification.Name("PHAssetsLoaded"), object: nil)
     }
 
     override func viewWillLayoutSubviews() {
@@ -42,9 +46,21 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource {
     
     override func viewDidLayoutSubviews() {
         
+        if let dataSource = dataSource {
+            if (viewDidLayoutSubviewsForTheFirstTime) {
+                viewDidLayoutSubviewsForTheFirstTime = false
+                
+                let lastIndexPath = IndexPath(item: dataSource.last!.phAssets.count-1, section: dataSource.count-1)
+                
+                collectionView.scrollToItem(at: lastIndexPath, at: [.left, .bottom], animated: false)
+            }
+        }
+        
         
         
     }
+    
+    
     
     
     // MARK: - CollectionView Data Source
@@ -73,11 +89,19 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return dataSource[section].phAssets.count
+        if let dataSource = dataSource {
+            return dataSource[section].phAssets.count
+        } else {
+            return 0
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return dataSource.count
+        if let dataSource = dataSource {
+            return dataSource.count
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -113,4 +137,20 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource {
     }
     
     
+}
+
+extension MomentsViewController {
+    @objc fileprivate func populatePhotosIfDataSourceIsAvailable() {
+        self.dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider?.momentsDataSource()
+        
+        DispatchQueue.main.async {
+            if self.dataSource != nil {
+                self.collectionView.reloadData()
+                self.collectionView.noAnyContentsAvailableView.isHidden = true
+            }
+        }
+        
+        
+        
+    }
 }

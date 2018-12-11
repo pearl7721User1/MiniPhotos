@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class MomentsDataSourceElement {
+struct MomentsDataSourceElement {
 
     var phAssetCollection: PHAssetCollection
     var phAssets: [PHAsset]

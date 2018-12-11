@@ -10,7 +10,7 @@ import UIKit
 
 class MomentsCommonCollectionView: UICollectionView {
 
-    private var noAnyContentsAvailableView = ViewForPermissionUnavailable()
+    var noAnyContentsAvailableView = ViewForPermissionUnavailable()
     
     enum CollectionViewType: Int {
         case MomentsCluster, Moments
@@ -41,7 +41,7 @@ class MomentsCommonCollectionView: UICollectionView {
         // add unavailability view
         self.addSubview(noAnyContentsAvailableView)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(hideNoAnyContentsAvailableView), name: Notification.Name("PHAssetsLoaded"), object: nil)
+        
         
     }
     
@@ -50,11 +50,6 @@ class MomentsCommonCollectionView: UICollectionView {
         
         noAnyContentsAvailableView.frame = self.bounds
     }
-    
-    @objc func hideNoAnyContentsAvailableView() {
-        noAnyContentsAvailableView.removeFromSuperview()
-    }
-    
     
     func indexPaths(from rect:CGRect) -> [IndexPath] {
         

@@ -11,7 +11,7 @@ import Photos
 
 class MomentsClusterNavigationController: UINavigationController {
 
-    var dataSourceProvider: PHAssetsProvider!
+    var dataSourceProvider: PHAssetsProvider?
     
     func initDataSourceProvider() {
         
