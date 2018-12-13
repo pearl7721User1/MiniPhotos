@@ -11,7 +11,9 @@ import Photos
 
 class MomentsClusterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    private var dataSource: [MomentsClusterDataSourceElement]!
+    private var dataSource: [MomentsClusterDataSourceElement]?
+    private var filteredDataSource: [MomentsClusterDataSourceElement]?
+    
     private var imageCache = NSCache<NSString, UIImage>()
     
     // collection view for displaying the asset thumbnails
@@ -23,14 +25,14 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         super.viewDidLoad()
         
         collectionView.collectionViewType = .MomentsCluster
-
         
         // create data source
         self.populatePhotosIfDataSourceIsAvailable()
         
+        // create display index map
         NotificationCenter.default.addObserver(self, selector: #selector(populatePhotosIfDataSourceIsAvailable), name: Notification.Name("PHAssetsLoaded"), object: nil)
         
-
+        
     }
     
     
@@ -40,8 +42,8 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GridViewCell.self), for: indexPath) as? GridViewCell else { fatalError("failed to dequeue GridViewCell") }
         
-        if let dataSource = dataSource {
-            let phAsset = dataSource[indexPath.section].phAssets[indexPath.row]
+        if let filteredDataSource = filteredDataSource {
+            let phAsset = filteredDataSource[indexPath.section].phAssets[indexPath.row]
             
             if let image = imageCache.object(forKey: phAsset.localIdentifier as NSString) {
                 cell.thumbnailImage = image
@@ -66,16 +68,16 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if let dataSource = dataSource {
-            return dataSource[section].phAssets.count
+        if let filteredDataSource = filteredDataSource {
+            return filteredDataSource[section].phAssets.count
         } else {
             return 0
         }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if let dataSource = dataSource {
-            return dataSource.count
+        if let filteredDataSource = filteredDataSource {
+            return filteredDataSource.count
         } else {
             return 0
         }
@@ -93,9 +95,9 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
                                                                              for: indexPath)
             let label = headerView.viewWithTag(10) as! UILabel
             
-            if let dataSource = dataSource,
-                let startDate = dataSource[indexPath.section].phCollectionList.startDate,
-            let endDate = dataSource[indexPath.section].phCollectionList.endDate {
+            if let filteredDataSource = filteredDataSource,
+                let startDate = filteredDataSource[indexPath.section].phCollectionList.startDate,
+            let endDate = filteredDataSource[indexPath.section].phCollectionList.endDate {
                 
                 let f = DateFormatter()
                 f.dateStyle = .medium
@@ -113,9 +115,6 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
-    }
 }
 
 extension MomentsClusterViewController {
@@ -124,6 +123,8 @@ extension MomentsClusterViewController {
         self.dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider?.momentsClusterDataSource()
         
         if self.dataSource != nil {
+            
+            self.filteredDataSource = self.filteredDataSource(from: self.dataSource!)
             
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -150,5 +151,20 @@ extension MomentsClusterViewController {
                 }
             }
         }
+    }
+    
+    private func filteredDataSource(from srcDataSource: [MomentsClusterDataSourceElement]) -> [MomentsClusterDataSourceElement] {
+        
+        var dstDataSource = [MomentsClusterDataSourceElement]()
+        if let dataSource = dataSource {
+            for (_,v) in dataSource.enumerated() {
+                
+                let element = MomentsClusterDataSourceElement.filteredMomentsClusterDataSourceElement(element: v)
+                
+                dstDataSource.append(element)
+            }
+        }
+        
+        return dstDataSource
     }
 }
