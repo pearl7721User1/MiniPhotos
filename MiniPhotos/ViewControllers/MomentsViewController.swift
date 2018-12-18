@@ -37,6 +37,22 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource {
         self.populatePhotosIfDataSourceIsAvailable()
         
         NotificationCenter.default.addObserver(self, selector: #selector(populatePhotosIfDataSourceIsAvailable), name: Notification.Name("PHAssetsLoaded"), object: nil)
+
+        
+        var chatImage = UIImage(named: "backArrow")
+        var leftButton : UIButton = UIButton(type: UIButtonType.system)
+        leftButton.setImage(chatImage, for: .normal)
+        leftButton.setTitle(" custom", for: .normal)
+        leftButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        let menuUIBarButtonItem = UIBarButtonItem(customView: leftButton)
+        
+        navigationItem.leftBarButtonItem = menuUIBarButtonItem
+    }
+    
+    @objc func backAction(sender: UIBarButtonItem) {
+        // custom actions here
+        navigationController?.popViewController(animated: true)
+        
     }
 
     override func viewWillLayoutSubviews() {
