@@ -11,8 +11,8 @@ import Photos
 
 class MomentsClusterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    private var dataSource: [MomentsClusterDataSourceElement]?
-    private var filteredDataSource: [MomentsClusterDataSourceElement]?
+    var dataSource: [MomentsClusterDataSourceElement]?
+    var filteredDataSource: [MomentsClusterDataSourceElement]?
     
     private var imageCache = NSCache<NSString, UIImage>()
     
@@ -115,6 +115,15 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let filteredDataSource = filteredDataSource {
+            
+            let phAsset = filteredDataSource[indexPath.section].phAssets[indexPath.row]
+            (self.navigationController as! MomentsClusterNavigationController).zoomIn(from: self, to: phAsset)
+            
+        }
+    }
 }
 
 extension MomentsClusterViewController {

@@ -9,9 +9,11 @@
 import UIKit
 import Photos
 
-class MomentsViewController: UIViewController, UICollectionViewDataSource {
+class MomentsViewController: UIViewController, UICollectionViewDataSource, WhichIndexPathToShow {
+    
+    var viewLoadTimeIndexPath: IndexPath?
 
-    private var dataSource: [MomentsDataSourceElement]?
+    var dataSource: [MomentsDataSourceElement]?
     
     // collection view for displaying the asset thumbnails
     @IBOutlet weak var collectionView: MomentsCommonCollectionView!
@@ -38,20 +40,23 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource {
         
         NotificationCenter.default.addObserver(self, selector: #selector(populatePhotosIfDataSourceIsAvailable), name: Notification.Name("PHAssetsLoaded"), object: nil)
 
+        var leftBarButtonItem: UIBarButtonItem {
+            let backArrowImage = UIImage(named: "backArrow")
+            let leftButton : UIButton = UIButton(type: UIButtonType.system)
+            leftButton.setImage(backArrowImage, for: .normal)
+            leftButton.setTitle(" Back", for: .normal)
+            leftButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+            leftButton.addTarget(self, action: #selector(backAction(sender:)), for: .touchUpInside)
+            
+            return UIBarButtonItem(customView: leftButton)
+        }
         
-        var chatImage = UIImage(named: "backArrow")
-        var leftButton : UIButton = UIButton(type: UIButtonType.system)
-        leftButton.setImage(chatImage, for: .normal)
-        leftButton.setTitle(" custom", for: .normal)
-        leftButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        let menuUIBarButtonItem = UIBarButtonItem(customView: leftButton)
-        
-        navigationItem.leftBarButtonItem = menuUIBarButtonItem
+        navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     @objc func backAction(sender: UIBarButtonItem) {
         // custom actions here
-        navigationController?.popViewController(animated: true)
+        (self.navigationController as! MomentsClusterNavigationController).zoomOut(from: self, to: nil)
         
     }
 
