@@ -46,6 +46,11 @@ class MomentsClusterNavigationController: UINavigationController {
                 }
             }
             
+            if let indexPathNavigatiable = momentsViewController as? IndexPathNavigation,
+                let indexPath = indexPath {
+                
+                indexPathNavigatiable.navigate(to: indexPath)
+            }
             
             self.pushViewController(momentsViewController, animated: true)
         }
@@ -57,6 +62,7 @@ class MomentsClusterNavigationController: UINavigationController {
     }
 }
 
-protocol WhichIndexPathToShow {
-    var viewLoadTimeIndexPath: IndexPath?
+protocol IndexPathNavigation {
+    
+    func navigate(to indexPath:IndexPath)
 }

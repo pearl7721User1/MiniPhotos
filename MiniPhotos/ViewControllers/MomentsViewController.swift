@@ -9,9 +9,8 @@
 import UIKit
 import Photos
 
-class MomentsViewController: UIViewController, UICollectionViewDataSource, WhichIndexPathToShow {
+class MomentsViewController: UIViewController, UICollectionViewDataSource, IndexPathNavigation {
     
-    var viewLoadTimeIndexPath: IndexPath?
 
     var dataSource: [MomentsDataSourceElement]?
     
@@ -66,7 +65,7 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Which
     }
     
     override func viewDidLayoutSubviews() {
-        
+        /*
         if let dataSource = dataSource {
             if (viewDidLayoutSubviewsForTheFirstTime) {
                 viewDidLayoutSubviewsForTheFirstTime = false
@@ -77,7 +76,7 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Which
             }
         }
         
-        
+        */
         
     }
     
@@ -157,7 +156,10 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Which
         }
     }
     
-    
+    // MARK: - IndexPathNavigation
+    func navigate(to indexPath:IndexPath) {
+        collectionView.scrollToItem(at: indexPath, at: [.left, .centeredVertically], animated: false)
+    }
 }
 
 extension MomentsViewController {
