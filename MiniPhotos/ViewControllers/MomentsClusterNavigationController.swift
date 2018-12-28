@@ -31,33 +31,35 @@ class MomentsClusterNavigationController: UINavigationController {
     
     func zoomIn(from momentsClusterViewController: MomentsClusterViewController, to phAsset: PHAsset) {
         
-        if let momentsViewController = self.momentsViewController {
+        guard let momentsViewController = self.momentsViewController,
+            let dataSource = momentsViewController.dataSource else {
+                return
+        }
+        
+        var indexPath: IndexPath?
+        for (i,v) in dataSource.enumerated() {
             
-            var indexPath: IndexPath?
-            if let dataSource = momentsViewController.dataSource {
-                
-                for (i,v) in dataSource.enumerated() {
-                    
-                    for (j,w) in v.phAssets.enumerated() {
-                        if phAsset.isEqual(w) {
-                            indexPath = IndexPath(item: j, section: i)
-                        }
-                    }
+            for (j,w) in v.phAssets.enumerated() {
+                if phAsset.isEqual(w) {
+                    indexPath = IndexPath(item: j, section: i)
                 }
             }
-            
-            if let indexPathNavigatiable = momentsViewController as? IndexPathNavigation,
-                let indexPath = indexPath {
-                
-                indexPathNavigatiable.navigate(to: indexPath)
-            }
-            
-            self.pushViewController(momentsViewController, animated: true)
         }
+    
+        if let indexPathNavigatiable = momentsViewController as? IndexPathNavigation,
+            let indexPath = indexPath {
+            
+            indexPathNavigatiable.navigate(to: indexPath)
+        }
+        
+        self.pushViewController(momentsViewController, animated: true)
+    
     }
     
     func zoomOut(from momentsViewController: MomentsViewController, to phAsset: PHAsset?) {
         self.momentsViewController = self.popViewController(animated: true) as? MomentsViewController
+        
+        
         
     }
 }
