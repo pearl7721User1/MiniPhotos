@@ -1,5 +1,5 @@
 //
-//  MomentsClusterDataSourceElement.swift
+//  PHCollectionListHolder.swift
 //  TestsOnPhotosContentOffsetDecisionInCollectionView
 //
 //  Created by GIWON1 on 2018. 11. 29..
@@ -9,10 +9,10 @@
 import UIKit
 import Photos
 
-struct MomentsClusterDataSourceElement {
-    
-    var phCollectionList: PHCollectionList
+struct PHCollectionListHolder: PHAssetsIndexable {
+
     var phAssets: [PHAsset]
+    var phCollectionList: PHCollectionList
     
     init?(phCollectionList: PHCollectionList, allPHAssets: PHFetchResult<PHAsset>) {
         
@@ -41,36 +41,42 @@ struct MomentsClusterDataSourceElement {
         self.phAssets = dstPHAssets
     }
     
-    init(phCollectionList: PHCollectionList, phAssets: [PHAsset]) {
-        self.phCollectionList = phCollectionList
-        self.phAssets = phAssets
-    }
-    
-    static func filteredMomentsClusterDataSourceElement(element: MomentsClusterDataSourceElement) -> MomentsClusterDataSourceElement {
+    func filteredToStringHolder() -> StringHolder {
         
-        let dstPHCollectionList = element.phCollectionList
+        let dstPHCollectionList = self.phCollectionList
         var dstPHAssets: [PHAsset]!
         
-        if element.phAssets.count > 50 {
-            dstPHAssets = reduce(from: element.phAssets, dstSize: 50)
-        } else if element.phAssets.count > 40 {
-            dstPHAssets = reduce(from: element.phAssets, dstSize: 40)
-        } else if element.phAssets.count > 30 {
-            dstPHAssets = reduce(from: element.phAssets, dstSize: 30)
-        } else if element.phAssets.count > 20 {
-            dstPHAssets = reduce(from: element.phAssets, dstSize: 20)
-        } else if element.phAssets.count > 10 {
-            dstPHAssets = reduce(from: element.phAssets, dstSize: 10)
+        if self.phAssets.count > 50 {
+            dstPHAssets = reduce(from: self.phAssets, dstSize: 50)
+        } else if self.phAssets.count > 40 {
+            dstPHAssets = reduce(from: self.phAssets, dstSize: 40)
+        } else if self.phAssets.count > 30 {
+            dstPHAssets = reduce(from: self.phAssets, dstSize: 30)
+        } else if self.phAssets.count > 20 {
+            dstPHAssets = reduce(from: self.phAssets, dstSize: 20)
+        } else if self.phAssets.count > 10 {
+            dstPHAssets = reduce(from: self.phAssets, dstSize: 10)
         } else {
-            dstPHAssets = element.phAssets
+            dstPHAssets = self.phAssets
         }
         
-        let element = MomentsClusterDataSourceElement(phCollectionList: dstPHCollectionList, phAssets: dstPHAssets)
+        // create a stringHolder
+        var title = ""
+        if let startDate = dstPHCollectionList.startDate,
+            let endDate = dstPHCollectionList.endDate {
+            
+            let f = DateFormatter()
+            f.dateStyle = .medium
+            f.timeStyle = .medium
+            
+            title = "\(f.string(from: startDate)) - \(f.string(from:endDate))"
+        }
         
-        return element
+        let stringHolderInstance = StringHolder(string: title, phAssets: dstPHAssets)
+        return stringHolderInstance
     }
     
-    static private func reduce(from srcArray: [PHAsset], dstSize: Int) -> [PHAsset] {
+    private func reduce(from srcArray: [PHAsset], dstSize: Int) -> [PHAsset] {
         let stride: Double = Double(srcArray.count) / Double((dstSize))
         
         var indexesOfSelection = [Int]()

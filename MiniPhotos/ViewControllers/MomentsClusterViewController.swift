@@ -11,8 +11,8 @@ import Photos
 
 class MomentsClusterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var dataSource: [MomentsClusterDataSourceElement]?
-    var filteredDataSource: [MomentsClusterDataSourceElement]?
+    var dataSource: [PHCollectionListHolder]?
+    var filteredDataSource: [StringHolder]?
     
     private var imageCache = NSCache<NSString, UIImage>()
     
@@ -25,6 +25,7 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         super.viewDidLoad()
         
         collectionView.collectionViewType = .MomentsCluster
+        
         
         // create data source
         self.populatePhotosIfDataSourceIsAvailable()
@@ -94,7 +95,7 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
                                                                              withReuseIdentifier: "ViewHeader",
                                                                              for: indexPath)
             let label = headerView.viewWithTag(10) as! UILabel
-            
+            /*
             if let filteredDataSource = filteredDataSource,
                 let startDate = filteredDataSource[indexPath.section].phCollectionList.startDate,
             let endDate = filteredDataSource[indexPath.section].phCollectionList.endDate {
@@ -105,6 +106,11 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
                 
                 label.text = "\(f.string(from: startDate)) - \(f.string(from:endDate))"
                 
+            }
+            */
+            
+            if let filteredDataSource = filteredDataSource {
+                label.text = filteredDataSource[indexPath.section].string
             }
             
             return headerView
@@ -128,52 +134,56 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
 
 extension MomentsClusterViewController {
     @objc fileprivate func populatePhotosIfDataSourceIsAvailable() {
+        // what this function does:
+        // 1 load dataSource and filteredDataSource property
+        // 2 set image cache
+        // 3 reload collection view
         
         self.dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider?.momentsClusterDataSource()
         
-        if self.dataSource != nil {
-            
-            self.filteredDataSource = self.filteredDataSource(from: self.dataSource!)
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-            
-            self.collectionView.noAnyContentsAvailableView.isHidden = true
-            
-            // request all thumbnail images to cache them
-            let requestOptions = PHImageRequestOptions()
-            requestOptions.deliveryMode = .opportunistic
-            requestOptions.resizeMode = .fast
-            requestOptions.isSynchronous = true
-            
-            // iterate data source
-            for dataSourceElement in self.dataSource! {
-                for phasset in dataSourceElement.phAssets {
+        guard let dataSource = self.dataSource,
+            let collectionView = self.collectionView else {
+            return
+        }
+        
+        self.filteredDataSource = filteredToStringHolders(from: dataSource)
+        
+        
+        // iterate data source and set image cache
+        let imageCache = self.imageCache
+        
+        // create request options for all thumbnail images to cache them
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.deliveryMode = .opportunistic
+        requestOptions.resizeMode = .fast
+        requestOptions.isSynchronous = true
+        
+        for dataSourceElement in dataSource {
+            for phasset in dataSourceElement.phAssets {
+                
+                PHImageManager().requestImage(for: phasset, targetSize: collectionView.thumbnailSize(), contentMode: .aspectFill, options: requestOptions, resultHandler: { image, _ in
                     
-                    PHImageManager().requestImage(for: phasset, targetSize: self.collectionView.thumbnailSize(), contentMode: .aspectFill, options: requestOptions, resultHandler: { image, _ in
-                        
-                        if let image = image {
-                            self.imageCache.setObject(image, forKey: phasset.localIdentifier as NSString)
-                        }
-                    })
-                }
+                    if let image = image {
+                        imageCache.setObject(image, forKey: phasset.localIdentifier as NSString)
+                    }
+                })
             }
         }
+        
+        collectionView.noAnyContentsAvailableView.isHidden = true
+        collectionView.reloadData()
     }
     
-    private func filteredDataSource(from srcDataSource: [MomentsClusterDataSourceElement]) -> [MomentsClusterDataSourceElement] {
+    private func filteredToStringHolders(from srcDataSource: [PHCollectionListHolder]) -> [StringHolder] {
         
-        var dstDataSource = [MomentsClusterDataSourceElement]()
-        if let dataSource = dataSource {
-            for (_,v) in dataSource.enumerated() {
-                
-                let element = MomentsClusterDataSourceElement.filteredMomentsClusterDataSourceElement(element: v)
-                
-                dstDataSource.append(element)
-            }
+        var stringHolderArray = [StringHolder]()
+
+        for (_,v) in srcDataSource.enumerated() {
+            
+            stringHolderArray.append(v.filteredToStringHolder())
         }
         
-        return dstDataSource
+        return stringHolderArray
     }
+
 }

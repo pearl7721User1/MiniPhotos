@@ -34,7 +34,7 @@ class PHAssetsProvider {
         self.allMomentsFetchResult = assetFetchResult
     }
     
-    func momentsClusterDataSource() -> [MomentsClusterDataSourceElement] {
+    func momentsClusterDataSource() -> [PHCollectionListHolder] {
         
         // fetch all moments cluster PHCollection Lists, resulting in feeding allPHCollectionLists
         let startDateFetchOption: PHFetchOptions = {
@@ -48,13 +48,13 @@ class PHAssetsProvider {
         
         
         // if allMomentsFetchResult exist, iterate over all the elements of allPHCollectionLists,
-        // take each PHCollectionList and allMomentsFetchResult as parameters to produce a MomentsClusterDataSourceElement instance, resulting in producing an array of
-        // MomentsClusterDataSourceElement to use it as the section, row of this collection view
-        var dataSourceElements = [MomentsClusterDataSourceElement]()
+        // take each PHCollectionList and allMomentsFetchResult as parameters to produce a PHCollectionListHolder instance, resulting in producing an array of
+        // PHCollectionListHolder to use it as the section, row of this collection view
+        var dataSourceElements = [PHCollectionListHolder]()
         
         allPHCollectionLists.enumerateObjects({ (list, index, stop) in
             
-            if let element = MomentsClusterDataSourceElement(phCollectionList: list, allPHAssets: self.allMomentsFetchResult) {
+            if let element = PHCollectionListHolder(phCollectionList: list, allPHAssets: self.allMomentsFetchResult) {
                 dataSourceElements.append(element)
             }
         })
@@ -62,7 +62,7 @@ class PHAssetsProvider {
         return dataSourceElements
     }
 
-    func momentsDataSource() -> [MomentsDataSourceElement] {
+    func momentsDataSource() -> [PHAssetCollectionHolder] {
         
         // fetch all moments cluster PHCollection Lists, resulting in feeding allPHCollectionLists
         let startDateFetchOption: PHFetchOptions = {
@@ -75,13 +75,13 @@ class PHAssetsProvider {
         let allPHAssetCollections = PHAssetCollection.fetchMoments(with: startDateFetchOption)
         
         // if allMomentsFetchResult exist, iterate over all the elements of allPHCollectionLists,
-        // take each PHCollectionList and allMomentsFetchResult as parameters to produce a MomentsClusterDataSourceElement instance, resulting in producing an array of
-        // MomentsClusterDataSourceElement to use it as the section, row of this collection view
-        var dataSourceElements = [MomentsDataSourceElement]()
+        // take each PHCollectionList and allMomentsFetchResult as parameters to produce a PHCollectionListHolder instance, resulting in producing an array of
+        // PHCollectionListHolder to use it as the section, row of this collection view
+        var dataSourceElements = [PHAssetCollectionHolder]()
         
         allPHAssetCollections.enumerateObjects({ (collection, index, stop) in
             
-            if let element = MomentsDataSourceElement(phAssetCollection: collection, allPHAssets: self.allMomentsFetchResult) {
+            if let element = PHAssetCollectionHolder(phAssetCollection: collection, allPHAssets: self.allMomentsFetchResult) {
                 dataSourceElements.append(element)
             }
         })

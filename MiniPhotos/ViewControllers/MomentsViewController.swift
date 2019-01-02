@@ -12,7 +12,7 @@ import Photos
 class MomentsViewController: UIViewController, UICollectionViewDataSource, IndexPathNavigation {
     
 
-    var dataSource: [MomentsDataSourceElement]?
+    var dataSource: [PHAssetCollectionHolder]?
     
     // collection view for displaying the asset thumbnails
     @IBOutlet weak var collectionView: MomentsCommonCollectionView!

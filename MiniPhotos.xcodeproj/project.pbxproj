@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE05BD1A21DC46F7007011F9 /* PHAssetsIndexable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE05BD1921DC46F7007011F9 /* PHAssetsIndexable.swift */; };
+		EE05BD1C21DC4AE1007011F9 /* StringHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE05BD1B21DC4AE1007011F9 /* StringHolder.swift */; };
 		EECAC50821BD1CFB000FEA4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */; };
 		EECAC50D21BD1CFB000FEA4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EECAC50B21BD1CFB000FEA4F /* Main.storyboard */; };
 		EECAC50F21BD1CFB000FEA4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EECAC50E21BD1CFB000FEA4F /* Assets.xcassets */; };
 		EECAC51221BD1CFB000FEA4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EECAC51021BD1CFB000FEA4F /* LaunchScreen.storyboard */; };
 		EECAC51D21BD1CFB000FEA4F /* MiniPhotosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC51C21BD1CFB000FEA4F /* MiniPhotosTests.swift */; };
-		EECAC52B21BE9FBD000FEA4F /* MomentsClusterDataSourceElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC52921BE9FBC000FEA4F /* MomentsClusterDataSourceElement.swift */; };
-		EECAC52C21BE9FBD000FEA4F /* MomentsDataSourceElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC52A21BE9FBC000FEA4F /* MomentsDataSourceElement.swift */; };
+		EECAC52B21BE9FBD000FEA4F /* PHCollectionListHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC52921BE9FBC000FEA4F /* PHCollectionListHolder.swift */; };
+		EECAC52C21BE9FBD000FEA4F /* PHAssetCollectionHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC52A21BE9FBC000FEA4F /* PHAssetCollectionHolder.swift */; };
 		EECAC53021BE9FCE000FEA4F /* MomentsClusterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC52D21BE9FCC000FEA4F /* MomentsClusterNavigationController.swift */; };
 		EECAC53121BE9FCE000FEA4F /* PHAssetsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC52E21BE9FCD000FEA4F /* PHAssetsProvider.swift */; };
 		EECAC53221BE9FCE000FEA4F /* MomentsClusterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC52F21BE9FCD000FEA4F /* MomentsClusterViewController.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE05BD1921DC46F7007011F9 /* PHAssetsIndexable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHAssetsIndexable.swift; sourceTree = "<group>"; };
+		EE05BD1B21DC4AE1007011F9 /* StringHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHolder.swift; sourceTree = "<group>"; };
 		EECAC50421BD1CFB000FEA4F /* MiniPhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniPhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EECAC50C21BD1CFB000FEA4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -45,8 +49,8 @@
 		EECAC51821BD1CFB000FEA4F /* MiniPhotosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniPhotosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EECAC51C21BD1CFB000FEA4F /* MiniPhotosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPhotosTests.swift; sourceTree = "<group>"; };
 		EECAC51E21BD1CFB000FEA4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EECAC52921BE9FBC000FEA4F /* MomentsClusterDataSourceElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentsClusterDataSourceElement.swift; sourceTree = "<group>"; };
-		EECAC52A21BE9FBC000FEA4F /* MomentsDataSourceElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentsDataSourceElement.swift; sourceTree = "<group>"; };
+		EECAC52921BE9FBC000FEA4F /* PHCollectionListHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PHCollectionListHolder.swift; sourceTree = "<group>"; };
+		EECAC52A21BE9FBC000FEA4F /* PHAssetCollectionHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PHAssetCollectionHolder.swift; sourceTree = "<group>"; };
 		EECAC52D21BE9FCC000FEA4F /* MomentsClusterNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentsClusterNavigationController.swift; sourceTree = "<group>"; };
 		EECAC52E21BE9FCD000FEA4F /* PHAssetsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PHAssetsProvider.swift; sourceTree = "<group>"; };
 		EECAC52F21BE9FCD000FEA4F /* MomentsClusterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentsClusterViewController.swift; sourceTree = "<group>"; };
@@ -136,8 +140,10 @@
 		EECAC52821BD1D5F000FEA4F /* Structures */ = {
 			isa = PBXGroup;
 			children = (
-				EECAC52921BE9FBC000FEA4F /* MomentsClusterDataSourceElement.swift */,
-				EECAC52A21BE9FBC000FEA4F /* MomentsDataSourceElement.swift */,
+				EE05BD1921DC46F7007011F9 /* PHAssetsIndexable.swift */,
+				EECAC52921BE9FBC000FEA4F /* PHCollectionListHolder.swift */,
+				EECAC52A21BE9FBC000FEA4F /* PHAssetCollectionHolder.swift */,
+				EE05BD1B21DC4AE1007011F9 /* StringHolder.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -247,14 +253,16 @@
 			files = (
 				EECAC53A21BEA02C000FEA4F /* StickyHeadersCollectionViewLayout.swift in Sources */,
 				EECAC53421BEA003000FEA4F /* MomentsViewController.swift in Sources */,
+				EE05BD1A21DC46F7007011F9 /* PHAssetsIndexable.swift in Sources */,
 				EECAC53021BE9FCE000FEA4F /* MomentsClusterNavigationController.swift in Sources */,
-				EECAC52C21BE9FBD000FEA4F /* MomentsDataSourceElement.swift in Sources */,
+				EE05BD1C21DC4AE1007011F9 /* StringHolder.swift in Sources */,
+				EECAC52C21BE9FBD000FEA4F /* PHAssetCollectionHolder.swift in Sources */,
 				EECAC53221BE9FCE000FEA4F /* MomentsClusterViewController.swift in Sources */,
 				EECAC53121BE9FCE000FEA4F /* PHAssetsProvider.swift in Sources */,
 				EECAC53821BEA024000FEA4F /* MomentsCommonCollectionView.swift in Sources */,
 				EECAC53C21BEA0E5000FEA4F /* ViewForPermissionUnavailable.swift in Sources */,
 				EECAC50821BD1CFB000FEA4F /* AppDelegate.swift in Sources */,
-				EECAC52B21BE9FBD000FEA4F /* MomentsClusterDataSourceElement.swift in Sources */,
+				EECAC52B21BE9FBD000FEA4F /* PHCollectionListHolder.swift in Sources */,
 				EECAC54021BEAAFE000FEA4F /* MyViewController.swift in Sources */,
 				EECAC53621BEA00E000FEA4F /* GridViewCell.swift in Sources */,
 			);

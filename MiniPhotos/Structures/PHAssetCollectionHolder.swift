@@ -1,5 +1,5 @@
 //
-//  MomentsDataSourceElement.swift
+//  PHAssetCollectionHolder.swift
 //  TestsOnPhotosContentOffsetDecisionInCollectionView
 //
 //  Created by SeoGiwon on 09/12/2018.
@@ -9,10 +9,10 @@
 import UIKit
 import Photos
 
-struct MomentsDataSourceElement {
+struct PHAssetCollectionHolder: PHAssetsIndexable {
 
-    var phAssetCollection: PHAssetCollection
     var phAssets: [PHAsset]
+    var phAssetCollection: PHAssetCollection
     
     init?(phAssetCollection: PHAssetCollection, allPHAssets: PHFetchResult<PHAsset>) {
         
