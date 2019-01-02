@@ -13,3 +13,6 @@ protocol PHAssetsIndexable {
     var phAssets: [PHAsset] { get set }
 }
 
+protocol PHAssetsSearchable {
+    func nearestIndex(for phAsset: PHAsset) -> Int?
+}

@@ -14,6 +14,8 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     var dataSource: [PHCollectionListHolder]?
     var filteredDataSource: [StringHolder]?
     
+    var phAssetsToShowAtViewLoad: PHAsset?
+    
     private var imageCache = NSCache<NSString, UIImage>()
     
     // collection view for displaying the asset thumbnails
@@ -33,6 +35,23 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         // create display index map
         NotificationCenter.default.addObserver(self, selector: #selector(populatePhotosIfDataSourceIsAvailable), name: Notification.Name("PHAssetsLoaded"), object: nil)
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let phAssetsToShowAtViewLoad = self.phAssetsToShowAtViewLoad {
+            
+            for (i,v) in self.filteredDataSource!.enumerated() {
+                if let index = v.nearestIndex(for: phAssetsToShowAtViewLoad) {
+                    
+                    let theIndexPath = IndexPath(item: index, section: i)
+                    collectionView.scrollToItem(at: theIndexPath, at: [.left, .top], animated: false)
+                    break
+                }
+            }
+        }
         
     }
     
@@ -95,19 +114,6 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
                                                                              withReuseIdentifier: "ViewHeader",
                                                                              for: indexPath)
             let label = headerView.viewWithTag(10) as! UILabel
-            /*
-            if let filteredDataSource = filteredDataSource,
-                let startDate = filteredDataSource[indexPath.section].phCollectionList.startDate,
-            let endDate = filteredDataSource[indexPath.section].phCollectionList.endDate {
-                
-                let f = DateFormatter()
-                f.dateStyle = .medium
-                f.timeStyle = .medium
-                
-                label.text = "\(f.string(from: startDate)) - \(f.string(from:endDate))"
-                
-            }
-            */
             
             if let filteredDataSource = filteredDataSource {
                 label.text = filteredDataSource[indexPath.section].string
@@ -126,10 +132,11 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         if let filteredDataSource = filteredDataSource {
             
             let phAsset = filteredDataSource[indexPath.section].phAssets[indexPath.row]
-            (self.navigationController as! MomentsClusterNavigationController).zoomIn(from: self, to: phAsset)
+            (self.navigationController as! PhotosNavigationController).zoomIn(to: phAsset)
             
         }
     }
+    
 }
 
 extension MomentsClusterViewController {
@@ -139,7 +146,7 @@ extension MomentsClusterViewController {
         // 2 set image cache
         // 3 reload collection view
         
-        self.dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider?.momentsClusterDataSource()
+        self.dataSource = (self.navigationController as! PhotosNavigationController).dataSourceProvider?.momentsClusterDataSource()
         
         guard let dataSource = self.dataSource,
             let collectionView = self.collectionView else {

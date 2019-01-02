@@ -126,10 +126,10 @@
             </objects>
             <point key="canvasLocation" x="-526" y="842"/>
         </scene>
-        <!--Moments Cluster Navigation Controller-->
+        <!--Photos Navigation Controller-->
         <scene sceneID="j8M-f8-ZeT">
             <objects>
-                <navigationController storyboardIdentifier="MomentsClusterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rx0-GC-nFg" customClass="MomentsClusterNavigationController" customModule="MiniPhotos" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PhotosNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rx0-GC-nFg" customClass="PhotosNavigationController" customModule="MiniPhotos" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1hQ-Jo-1eI">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

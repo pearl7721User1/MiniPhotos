@@ -55,7 +55,17 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
     
     @objc func backAction(sender: UIBarButtonItem) {
         // custom actions here
-        (self.navigationController as! MomentsClusterNavigationController).zoomOut(from: self, to: nil)
+        
+        var phAssetOfInterest: PHAsset?
+        if let firstIndexCell = self.collectionView.visibleCells.first,
+            let dataSource = self.dataSource,
+            let indexPath = self.collectionView.indexPath(for: firstIndexCell) {
+            
+            phAssetOfInterest = dataSource[indexPath.section].phAssets[indexPath.row]
+            
+        }
+        
+        (self.navigationController as! PhotosNavigationController).zoomOut(to: phAssetOfInterest)
         
     }
 
@@ -164,7 +174,7 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
 
 extension MomentsViewController {
     @objc fileprivate func populatePhotosIfDataSourceIsAvailable() {
-        self.dataSource = (self.navigationController as! MomentsClusterNavigationController).dataSourceProvider?.momentsDataSource()
+        self.dataSource = (self.navigationController as! PhotosNavigationController).dataSourceProvider?.momentsDataSource()
         
         DispatchQueue.main.async {
             if self.dataSource != nil {

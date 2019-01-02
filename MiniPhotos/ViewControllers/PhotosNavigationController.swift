@@ -1,5 +1,5 @@
 //
-//  MomentsClusterNavigationController.swift
+//  PhotosNavigationController.swift
 //  TestsOnPhotosContentOffsetDecisionInCollectionView
 //
 //  Created by GIWON1 on 2018. 11. 29..
@@ -9,9 +9,12 @@
 import UIKit
 import Photos
 
-class MomentsClusterNavigationController: UINavigationController {
 
+class PhotosNavigationController: UINavigationController {
+
+    // TODO: - protocol binding for two view controllers
     private var momentsViewController: MomentsViewController?
+    private var momentsClusterViewController: MomentsClusterViewController?
     var dataSourceProvider: PHAssetsProvider?
     
     func initDataSourceProvider() {
@@ -19,8 +22,13 @@ class MomentsClusterNavigationController: UINavigationController {
         self.dataSourceProvider = PHAssetsProvider()
     }
     
-    static func newInstanceWithMomentsViewController() -> MomentsClusterNavigationController {
-        let newInstance = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MomentsClusterNavigationController") as! MomentsClusterNavigationController
+    func initChildViewControllers(navigationController: PhotosNavigationController) {
+        self.momentsClusterViewController = navigationController.childViewControllers[0] as! MomentsClusterViewController
+        self.momentsViewController = navigationController.childViewControllers[1] as! MomentsViewController
+    }
+    
+    static func newInstanceWithMomentsViewController() -> PhotosNavigationController {
+        let newInstance = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotosNavigationController") as! PhotosNavigationController
         
         let momentsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MomentsViewController") as! MomentsViewController
 
@@ -29,8 +37,14 @@ class MomentsClusterNavigationController: UINavigationController {
         return newInstance
     }
     
-    func zoomIn(from momentsClusterViewController: MomentsClusterViewController, to phAsset: PHAsset) {
-        
+    
+    
+    func zoomIn(to phAsset: PHAsset) {
+        // what this function does:
+        // 1 check the navigation stack status and see if zooming in is possible
+        // 2 If it is, navigate
+
+        // TODO: - navigation stack validation
         guard let momentsViewController = self.momentsViewController,
             let dataSource = momentsViewController.dataSource else {
                 return
@@ -56,10 +70,16 @@ class MomentsClusterNavigationController: UINavigationController {
     
     }
     
-    func zoomOut(from momentsViewController: MomentsViewController, to phAsset: PHAsset?) {
-        self.momentsViewController = self.popViewController(animated: true) as? MomentsViewController
-        
-        
+    func zoomOut(to phAsset: PHAsset?) {
+        // what this function does:
+        // 0 simply pop view controller if phAsset is nil
+        // 1 check the navigation stack status and see if zooming out is possible
+        // 2 if it is, find the indexPath
+        // 3
+
+        // plant indexPathToShowAtViewLoad
+        self.momentsClusterViewController!.phAssetsToShowAtViewLoad = phAsset
+        self.popViewController(animated: true)
         
     }
 }

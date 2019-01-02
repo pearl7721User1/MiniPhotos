@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class StringHolder: PHAssetsIndexable {
+struct StringHolder: PHAssetsIndexable, PHAssetsSearchable {
 
     var string: String
     var phAssets: [PHAsset]
@@ -17,5 +17,28 @@ class StringHolder: PHAssetsIndexable {
     init(string: String, phAssets: [PHAsset]) {
         self.phAssets = phAssets
         self.string = string
+    }
+    
+    func nearestIndex(for phAsset: PHAsset) -> Int? {
+        
+        for (i,v) in self.phAssets.enumerated() {
+            if phAsset == v {
+                return i
+            }
+        }
+        
+        
+        for (i,v) in self.phAssets.enumerated() {
+            if let lvCreationDate = phAsset.creationDate,
+                let rvCreationDate = v.creationDate {
+                
+                if lvCreationDate < rvCreationDate {
+                    return i
+                }
+                
+            }
+        }
+        
+        return nil
     }
 }

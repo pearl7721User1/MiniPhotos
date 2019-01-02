@@ -13,13 +13,14 @@ import Photos
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var momentsNavigationController: MomentsClusterNavigationController!
+    var momentsNavigationController: PhotosNavigationController!
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        momentsNavigationController = MomentsClusterNavigationController.newInstanceWithMomentsViewController()
+        momentsNavigationController = PhotosNavigationController.newInstanceWithMomentsViewController()
+        momentsNavigationController.initChildViewControllers(navigationController: momentsNavigationController)
         window?.rootViewController = momentsNavigationController
         
         if (PHPhotoLibrary.authorizationStatus() == .authorized) {
