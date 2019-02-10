@@ -10,7 +10,6 @@ import UIKit
 
 class MomentsCommonCollectionView: UICollectionView {
 
-    var noAnyContentsAvailableView = ViewForPermissionUnavailable()
     
     enum CollectionViewType: Int {
         case MomentsCluster, Moments
@@ -38,18 +37,8 @@ class MomentsCommonCollectionView: UICollectionView {
         let flowLayout = MomentsCommonCollectionView.flowLayout(of: collectionViewType)
         self.collectionViewLayout = flowLayout
         
-        // add unavailability view
-        self.addSubview(noAnyContentsAvailableView)
-        
-        
-        
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        noAnyContentsAvailableView.frame = self.bounds
-    }
     
     func indexPaths(from rect:CGRect) -> [IndexPath] {
         

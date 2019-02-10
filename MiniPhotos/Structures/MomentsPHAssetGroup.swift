@@ -1,5 +1,5 @@
 //
-//  PHAssetCollectionHolder.swift
+//  MomentsPHAssetGroup.swift
 //  TestsOnPhotosContentOffsetDecisionInCollectionView
 //
 //  Created by SeoGiwon on 09/12/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-struct PHAssetCollectionHolder: PHAssetsIndexable {
+struct MomentsPHAssetGroup: PHAssetsIndexable {
 
     var phAssets: [PHAsset]
     var phAssetCollection: PHAssetCollection
@@ -18,6 +18,7 @@ struct PHAssetCollectionHolder: PHAssetsIndexable {
         
         guard let startDate = phAssetCollection.startDate,
             let endDate = phAssetCollection.endDate else {
+                print("moments nil")
                 return nil
         }
         
@@ -29,11 +30,14 @@ struct PHAssetCollectionHolder: PHAssetsIndexable {
         allPHAssets.enumerateObjects({ (asset, index, stop) in
             
             if let creationDate = asset.creationDate {
+                
                 if creationDate < endDate && creationDate > startDate {
                     dstPHAssets.append(asset)
-                } else if creationDate == endDate {
+                } else if creationDate == endDate || creationDate == startDate {
                     dstPHAssets.append(asset)
                 }
+            } else {
+                print("creationDate doesn't exist.")
             }
         })
         

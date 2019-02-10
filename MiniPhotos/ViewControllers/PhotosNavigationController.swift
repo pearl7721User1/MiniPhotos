@@ -13,19 +13,21 @@ import Photos
 class PhotosNavigationController: UINavigationController {
 
     // TODO: - protocol binding for two view controllers
-    private var momentsViewController: MomentsViewController?
-    private var momentsClusterViewController: MomentsClusterViewController?
-    var dataSourceProvider: PHAssetsProvider?
-    
-    func initDataSourceProvider() {
-        
-        self.dataSourceProvider = PHAssetsProvider()
+    private var momentsViewController: MomentsViewController!
+    private var momentsClusterViewController: MomentsClusterViewController!
+    var clusterPHAssetGroups: [ClusterPHAssetGroup]! {
+        didSet {
+            self.momentsClusterViewController.phAssetGroups = self.clusterPHAssetGroups
+        }
+    }
+    var momentsPHAssetGroups: [MomentsPHAssetGroup]! {
+        didSet {
+            self.momentsViewController.phAssetGroups = self.momentsPHAssetGroups
+        }
     }
     
-    func initChildViewControllers(navigationController: PhotosNavigationController) {
-        self.momentsClusterViewController = navigationController.childViewControllers[0] as! MomentsClusterViewController
-        self.momentsViewController = navigationController.childViewControllers[1] as! MomentsViewController
-    }
+    
+    var modelProvider: PhotosNavigationModelProvider!
     
     static func newInstanceWithMomentsViewController() -> PhotosNavigationController {
         let newInstance = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotosNavigationController") as! PhotosNavigationController
@@ -33,6 +35,9 @@ class PhotosNavigationController: UINavigationController {
         let momentsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MomentsViewController") as! MomentsViewController
 
         newInstance.pushViewController(momentsVC, animated: false)
+        
+        newInstance.momentsClusterViewController = (newInstance.childViewControllers[0] as! MomentsClusterViewController)
+        newInstance.momentsViewController = (newInstance.childViewControllers[1] as! MomentsViewController)
         
         return newInstance
     }
@@ -44,14 +49,8 @@ class PhotosNavigationController: UINavigationController {
         // 1 check the navigation stack status and see if zooming in is possible
         // 2 If it is, navigate
 
-        // TODO: - navigation stack validation
-        guard let momentsViewController = self.momentsViewController,
-            let dataSource = momentsViewController.dataSource else {
-                return
-        }
-        
         var indexPath: IndexPath?
-        for (i,v) in dataSource.enumerated() {
+        for (i,v) in momentsPHAssetGroups.enumerated() {
             
             for (j,w) in v.phAssets.enumerated() {
                 if phAsset.isEqual(w) {
@@ -78,7 +77,7 @@ class PhotosNavigationController: UINavigationController {
         // 3
 
         // plant indexPathToShowAtViewLoad
-        self.momentsClusterViewController!.phAssetsToShowAtViewLoad = phAsset
+//        self.momentsClusterViewController!.phAssetsToShowAtViewLoad = phAsset
         self.popViewController(animated: true)
         
     }

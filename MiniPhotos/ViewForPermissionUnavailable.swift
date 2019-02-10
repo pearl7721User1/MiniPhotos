@@ -17,6 +17,8 @@ class ViewForPermissionUnavailable: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.backgroundColor = UIColor.white
+        
         lb.text = "Access to Photo gallery is locked."
         lb.textAlignment = .center
         self.addSubview(lb)

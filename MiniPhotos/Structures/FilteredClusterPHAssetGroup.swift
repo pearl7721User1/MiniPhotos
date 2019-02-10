@@ -1,5 +1,5 @@
 //
-//  StringHolder.swift
+//  FilteredClusterPHAssetGroup.swift
 //  MiniPhotos
 //
 //  Created by SeoGiwon on 02/01/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-struct StringHolder: PHAssetsIndexable, PHAssetsSearchable {
+struct FilteredClusterPHAssetGroup: PHAssetsIndexable, PHAssetsSearchable {
 
     var string: String
     var phAssets: [PHAsset]

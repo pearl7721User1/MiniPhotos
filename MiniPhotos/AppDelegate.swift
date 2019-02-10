@@ -13,23 +13,19 @@ import Photos
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var momentsNavigationController: PhotosNavigationController!
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        momentsNavigationController = PhotosNavigationController.newInstanceWithMomentsViewController()
-        momentsNavigationController.initChildViewControllers(navigationController: momentsNavigationController)
-        window?.rootViewController = momentsNavigationController
-        
         if (PHPhotoLibrary.authorizationStatus() == .authorized) {
-            momentsNavigationController.initDataSourceProvider()
+            let photosNavigationController = PhotosNavigationController.newInstanceWithMomentsViewController()
+            window?.rootViewController = photosNavigationController
             
-            // send notification
-            NotificationCenter.default.post(name: Notification.Name("PHAssetsLoaded"), object: nil)
+            let modelProvider = PhotosNavigationModelProvider()
+            photosNavigationController.momentsPHAssetGroups = modelProvider.momentsPHAssetGroups()
+            photosNavigationController.clusterPHAssetGroups = modelProvider.clusterPHAssetGroups()
+            
         }
-        
         
         return true
     }
@@ -57,19 +53,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     
-}
-
-extension AppDelegate {
-    func askPhotosAccessPerission() {
-        
-        PHPhotoLibrary.requestAuthorization { (status) in
-            if status == .authorized {
-                self.momentsNavigationController.initDataSourceProvider()
-                
-                // send notification
-                NotificationCenter.default.post(name: Notification.Name("PHAssetsLoaded"), object: nil)
-            }
-        }
-        
-    }
 }

@@ -1,5 +1,5 @@
 //
-//  PHCollectionListHolder.swift
+//  ClusterPHAssetGroup.swift
 //  TestsOnPhotosContentOffsetDecisionInCollectionView
 //
 //  Created by GIWON1 on 2018. 11. 29..
@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-struct PHCollectionListHolder: PHAssetsIndexable {
+struct ClusterPHAssetGroup: PHAssetsIndexable {
 
     var phAssets: [PHAsset]
     var phCollectionList: PHCollectionList
@@ -18,6 +18,7 @@ struct PHCollectionListHolder: PHAssetsIndexable {
         
         guard let startDate = phCollectionList.startDate,
             let endDate = phCollectionList.endDate else {
+                print("moments cluster nil")
                 return nil
         }
         
@@ -31,9 +32,11 @@ struct PHCollectionListHolder: PHAssetsIndexable {
             if let creationDate = asset.creationDate {
                 if creationDate < endDate && creationDate > startDate {
                     dstPHAssets.append(asset)
-                } else if creationDate == endDate {
+                } else if creationDate == endDate || creationDate == startDate {
                     dstPHAssets.append(asset)
                 }
+            } else {
+                print("creationDate doesn't exist")
             }
         })
         
@@ -41,7 +44,7 @@ struct PHCollectionListHolder: PHAssetsIndexable {
         self.phAssets = dstPHAssets
     }
     
-    func filteredToStringHolder() -> StringHolder {
+    func filteredClusterPHAssetGroup() -> FilteredClusterPHAssetGroup {
         
         let dstPHCollectionList = self.phCollectionList
         var dstPHAssets: [PHAsset]!
@@ -60,7 +63,7 @@ struct PHCollectionListHolder: PHAssetsIndexable {
             dstPHAssets = self.phAssets
         }
         
-        // create a stringHolder
+        // create a FilteredClusterPHAssetGroup
         var title = ""
         if let startDate = dstPHCollectionList.startDate,
             let endDate = dstPHCollectionList.endDate {
@@ -72,8 +75,8 @@ struct PHCollectionListHolder: PHAssetsIndexable {
             title = "\(f.string(from: startDate)) - \(f.string(from:endDate))"
         }
         
-        let stringHolderInstance = StringHolder(string: title, phAssets: dstPHAssets)
-        return stringHolderInstance
+        let filteredClusterPHAssetGroup = FilteredClusterPHAssetGroup(string: title, phAssets: dstPHAssets)
+        return filteredClusterPHAssetGroup
     }
     
     private func reduce(from srcArray: [PHAsset], dstSize: Int) -> [PHAsset] {

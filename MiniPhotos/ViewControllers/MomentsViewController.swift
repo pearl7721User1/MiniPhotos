@@ -10,35 +10,18 @@ import UIKit
 import Photos
 
 class MomentsViewController: UIViewController, UICollectionViewDataSource, IndexPathNavigation {
-    
 
-    var dataSource: [PHAssetCollectionHolder]?
+    var phAssetGroups: [MomentsPHAssetGroup]!
     
     // collection view for displaying the asset thumbnails
     @IBOutlet weak var collectionView: MomentsCommonCollectionView!
     
-    private var viewDidLayoutSubviewsForTheFirstTime = true
-    
     // MARK: - View Cycle
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //
-        (UIApplication.shared.delegate as! AppDelegate).askPhotosAccessPerission()
-        
-        
         collectionView.collectionViewType = .Moments
         
-        // create data source
-        self.populatePhotosIfDataSourceIsAvailable()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(populatePhotosIfDataSourceIsAvailable), name: Notification.Name("PHAssetsLoaded"), object: nil)
-
         var leftBarButtonItem: UIBarButtonItem {
             let backArrowImage = UIImage(named: "backArrow")
             let leftButton : UIButton = UIButton(type: UIButtonType.system)
@@ -58,10 +41,10 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
         
         var phAssetOfInterest: PHAsset?
         if let firstIndexCell = self.collectionView.visibleCells.first,
-            let dataSource = self.dataSource,
+            let phAssetGroups = self.phAssetGroups,
             let indexPath = self.collectionView.indexPath(for: firstIndexCell) {
             
-            phAssetOfInterest = dataSource[indexPath.section].phAssets[indexPath.row]
+            phAssetOfInterest = phAssetGroups[indexPath.section].phAssets[indexPath.row]
             
         }
         
@@ -69,29 +52,6 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
         
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-    }
-    
-    override func viewDidLayoutSubviews() {
-        /*
-        if let dataSource = dataSource {
-            if (viewDidLayoutSubviewsForTheFirstTime) {
-                viewDidLayoutSubviewsForTheFirstTime = false
-                
-                let lastIndexPath = IndexPath(item: dataSource.last!.phAssets.count-1, section: dataSource.count-1)
-                
-                collectionView.scrollToItem(at: lastIndexPath, at: [.left, .bottom], animated: false)
-            }
-        }
-        
-        */
-        
-    }
-    
-    
-    
     
     // MARK: - CollectionView Data Source
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -100,8 +60,8 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GridViewCell.self), for: indexPath) as? GridViewCell else { fatalError("failed to dequeue GridViewCell") }
         
         
-        if let dataSource = dataSource {
-            let phAsset = dataSource[indexPath.section].phAssets[indexPath.row]
+        if let phAssetGroups = phAssetGroups {
+            let phAsset = phAssetGroups[indexPath.section].phAssets[indexPath.row]
             
             cell.representedAssetIdentifier = phAsset.localIdentifier
             PHImageManager().requestImage(for: phAsset, targetSize: self.collectionView.thumbnailSize(), contentMode: .aspectFill, options: nil, resultHandler: { image, _ in
@@ -119,16 +79,16 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if let dataSource = dataSource {
-            return dataSource[section].phAssets.count
+        if let phAssetGroups = phAssetGroups {
+            return phAssetGroups[section].phAssets.count
         } else {
             return 0
         }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if let dataSource = dataSource {
-            return dataSource.count
+        if let phAssetGroups = phAssetGroups {
+            return phAssetGroups.count
         } else {
             return 0
         }
@@ -146,9 +106,9 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
                                                                              for: indexPath)
             let label = headerView.viewWithTag(10) as! UILabel
             
-            if let dataSource = dataSource,
-                let startDate = dataSource[indexPath.section].phAssetCollection.startDate,
-                let endDate = dataSource[indexPath.section].phAssetCollection.endDate {
+            if let phAssetGroups = phAssetGroups,
+                let startDate = phAssetGroups[indexPath.section].phAssetCollection.startDate,
+                let endDate = phAssetGroups[indexPath.section].phAssetCollection.endDate {
                 
                 let f = DateFormatter()
                 f.dateStyle = .medium
@@ -169,21 +129,5 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
     // MARK: - IndexPathNavigation
     func navigate(to indexPath:IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: [.left, .centeredVertically], animated: false)
-    }
-}
-
-extension MomentsViewController {
-    @objc fileprivate func populatePhotosIfDataSourceIsAvailable() {
-        self.dataSource = (self.navigationController as! PhotosNavigationController).dataSourceProvider?.momentsDataSource()
-        
-        DispatchQueue.main.async {
-            if self.dataSource != nil {
-                self.collectionView.reloadData()
-                self.collectionView.noAnyContentsAvailableView.isHidden = true
-            }
-        }
-        
-        
-        
     }
 }
