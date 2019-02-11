@@ -130,4 +130,7 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
     func navigate(to indexPath:IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: [.left, .centeredVertically], animated: false)
     }
+    
+    
+    
 }

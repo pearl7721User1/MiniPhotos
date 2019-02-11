@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EE05BD1A21DC46F7007011F9 /* StructBehaviors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE05BD1921DC46F7007011F9 /* StructBehaviors.swift */; };
 		EE05BD1C21DC4AE1007011F9 /* FilteredClusterPHAssetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE05BD1B21DC4AE1007011F9 /* FilteredClusterPHAssetGroup.swift */; };
+		EE33AA3D220FDC9400E0BE8C /* ZoomInAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE33AA3C220FDC9400E0BE8C /* ZoomInAnimationController.swift */; };
 		EECAC50821BD1CFB000FEA4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */; };
 		EECAC50D21BD1CFB000FEA4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EECAC50B21BD1CFB000FEA4F /* Main.storyboard */; };
 		EECAC50F21BD1CFB000FEA4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EECAC50E21BD1CFB000FEA4F /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		EE05BD1921DC46F7007011F9 /* StructBehaviors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructBehaviors.swift; sourceTree = "<group>"; };
 		EE05BD1B21DC4AE1007011F9 /* FilteredClusterPHAssetGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredClusterPHAssetGroup.swift; sourceTree = "<group>"; };
+		EE33AA3C220FDC9400E0BE8C /* ZoomInAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomInAnimationController.swift; sourceTree = "<group>"; };
 		EECAC50421BD1CFB000FEA4F /* MiniPhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniPhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EECAC50C21BD1CFB000FEA4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -88,6 +90,14 @@
 			path = ModelFactory;
 			sourceTree = "<group>";
 		};
+		EE33AA3B220FDC8300E0BE8C /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				EE33AA3C220FDC9400E0BE8C /* ZoomInAnimationController.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		EECAC4FB21BD1CFB000FEA4F = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +119,7 @@
 		EECAC50621BD1CFB000FEA4F /* MiniPhotos */ = {
 			isa = PBXGroup;
 			children = (
+				EE33AA3B220FDC8300E0BE8C /* Animation */,
 				EE33AA3A220EF0D800E0BE8C /* ModelFactory */,
 				EECAC52821BD1D5F000FEA4F /* Structures */,
 				EECAC52721BD1D59000FEA4F /* ViewControllers */,
@@ -272,6 +283,7 @@
 				EECAC50821BD1CFB000FEA4F /* AppDelegate.swift in Sources */,
 				EECAC52B21BE9FBD000FEA4F /* ClusterPHAssetGroup.swift in Sources */,
 				EECAC54021BEAAFE000FEA4F /* PhotoLibraryPermissionCheckViewController.swift in Sources */,
+				EE33AA3D220FDC9400E0BE8C /* ZoomInAnimationController.swift in Sources */,
 				EECAC53621BEA00E000FEA4F /* GridViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -39,14 +39,29 @@ class MomentsCommonCollectionView: UICollectionView {
         
     }
     
-    
+    /*
     func indexPaths(from rect:CGRect) -> [IndexPath] {
         
         let allLayoutAttributes = collectionViewLayout.layoutAttributesForElements(in: rect)!
         return allLayoutAttributes.map { $0.indexPath }
         
     }
-    
+    */
+    func contentOffsetRect(for indexPath:IndexPath) -> CGRect {
+        let attribute = collectionViewLayout.layoutAttributesForItem(at: indexPath)
+        print("\(attribute?.frame.origin.x), \(attribute?.frame.origin.y), \(contentOffset.y)")
+        
+        var rect = CGRect.zero
+        
+        if let attribute = attribute {
+            let newOrigin = CGPoint(x: attribute.frame.origin.x - contentOffset.x, y: attribute.frame.origin.y - contentOffset.y)
+            
+            rect = CGRect(origin: newOrigin, size: attribute.size)
+        }
+        
+        return rect
+    }
+
     func thumbnailSize() -> CGSize {
         
         let scale = UIScreen.main.scale
