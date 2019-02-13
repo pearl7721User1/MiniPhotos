@@ -18,6 +18,13 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     // collection view for displaying the asset thumbnails
     @IBOutlet weak var collectionView: MomentsCommonCollectionView!
     
+    @IBAction func barButton1Tapped(_ sender: UIBarButtonItem) {
+        collectionView.setCollectionViewLayout(MomentsCommonCollectionView.flowLayout(of: .Moments), animated: true)
+    }
+    
+    @IBAction func barButton2Tapped(_ sender: UIBarButtonItem) {
+        collectionView.setCollectionViewLayout(MomentsCommonCollectionView.flowLayout(of: .MomentsCluster), animated: true)
+    }
     
     // MARK: - View Cycle
     override func viewDidLoad() {

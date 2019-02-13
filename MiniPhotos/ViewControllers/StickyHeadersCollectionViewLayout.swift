@@ -12,7 +12,18 @@ import UIKit
 class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     var topOffset: CGFloat = 64
-    
+    /*
+    override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
+        let attr =
+            super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)?.copy()
+                as? UICollectionViewLayoutAttributes
+        
+        attr?.center = CGPoint(x: 100, y: 200)
+        
+        return attr;
+    }
+    */
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }

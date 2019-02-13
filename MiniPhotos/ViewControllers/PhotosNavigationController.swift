@@ -98,9 +98,9 @@ class PhotosNavigationController: UINavigationController {
             let animationTransformForBg = animationTransform(startingFrame: bgView.frame, destinationPoint: endingFrameForCell.origin, scale:scaleFactor )
             print("\(bgView.frame.origin.x), \(bgView.frame.origin.y), \(bgView.frame.size.width), \(bgView.frame.size.height)")
             
-            self.zoomInAnimationController = ZoomInPopupAnimationController(cellOfInterestSnapshot: UIView(), backgroundViewSnapshot:bgView, animationTransform: animationTransformForBg)
+            self.zoomInAnimationController = ZoomInPopupAnimationController(cellOfInterestSnapshot: UIView(), backgroundViewSnapshot:bgView, animationTransform: animationTransformForBg, indexPath:endingIndexPath)
             
-            momentsViewController.collectionView.contentOffsetRect(for: endingIndexPath)
+//            momentsViewController.collectionView.contentOffsetRect(for: endingIndexPath)
             
         }
         

@@ -13,11 +13,13 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
     private var cellOfInterestSnapshot: UIView
     private var backgroundViewSnapshot: UIView
     private var animationTransform: CGAffineTransform
+    private var indexPath: IndexPath
     
-    init(cellOfInterestSnapshot: UIView, backgroundViewSnapshot: UIView, animationTransform: CGAffineTransform) {
+    init(cellOfInterestSnapshot: UIView, backgroundViewSnapshot: UIView, animationTransform: CGAffineTransform, indexPath: IndexPath) {
         self.cellOfInterestSnapshot = cellOfInterestSnapshot
         self.backgroundViewSnapshot = backgroundViewSnapshot
         self.animationTransform = animationTransform
+        self.indexPath = indexPath
     }
  
     
@@ -27,8 +29,8 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
-        guard let toViewController = transitionContext.viewController(forKey: .to),
-            let fromViewController = transitionContext.viewController(forKey: .from) else {
+        guard let toViewController = transitionContext.viewController(forKey: .to) as? MomentsViewController,
+            let fromViewController = transitionContext.viewController(forKey: .from) as? MomentsClusterViewController else {
             
             fatalError()
         }
@@ -37,27 +39,32 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
         let startingFrame = transitionContext.initialFrame(for: fromViewController)
         let finalFrame = transitionContext.finalFrame(for: toViewController)
         
-        containerView.addSubview(backgroundViewSnapshot)
-//        containerView.addSubview(cellOfInterestSnapshot)
+        let fromLayout = MomentsCommonCollectionView.flowLayout(of: .MomentsCluster)
+        let toLayout = MomentsCommonCollectionView.flowLayout(of: .Moments)
         
+        toViewController.view.frame = finalFrame
+        containerView.addSubview(toViewController.view)
+        toViewController.collectionView.setCollectionViewLayout(fromLayout, animated: false)
         
-//        backgroundViewSnapshot.frame = startingFrame
-        
-        
-        
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
-            
-            self.backgroundViewSnapshot.transform = self.animationTransform
-            
-        }, completion: { (finished) in
-            
-            self.backgroundViewSnapshot.removeFromSuperview()
-            
+        /*
+        toViewController.collectionView.setCollectionViewLayout(toLayout, animated: false) { (finished) in
             toViewController.view.frame = finalFrame
             containerView.addSubview(toViewController.view)
             transitionContext.completeTransition(finished)
+        }
+        */
+        
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
+            
+            toViewController.collectionView.setCollectionViewLayout(toLayout, animated: false)
+            toViewController.navigate(to: self.indexPath)
+            
+        }, completion: { (finished) in
+            
+            transitionContext.completeTransition(finished)
             
         })
+        
         
         
     }

@@ -254,7 +254,20 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="STM-sd-iHr"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Moments Cluster" id="DvW-b9-33S"/>
+                    <navigationItem key="navigationItem" title="Moments Cluster" id="DvW-b9-33S">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" id="lwo-AR-zKm">
+                                <connections>
+                                    <action selector="barButton1Tapped:" destination="BDt-ry-U5u" id="C4Y-Xp-hKb"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" id="YPc-fX-JZl">
+                                <connections>
+                                    <action selector="barButton2Tapped:" destination="BDt-ry-U5u" id="ytr-wm-6Aa"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="zZd-H1-axi" id="eKZ-g9-ZLL"/>
