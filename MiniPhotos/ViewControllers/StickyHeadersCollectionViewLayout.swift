@@ -12,18 +12,50 @@ import UIKit
 class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     var topOffset: CGFloat = 64
-    /*
+    
+    override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
+        let attr =
+            super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)?.copy()
+                as? UICollectionViewLayoutAttributes
+        
+        if itemIndexPath.section <= 10 {
+           print("initial, s: \(itemIndexPath.section) i:\(itemIndexPath.row), \(attr?.center.x), \(attr?.center.y)")
+        }
+        
+        if let attr = attr {
+            attr.center = CGPoint.zero
+        }
+        
+        
+        return attr;
+    }
+    
     override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
         let attr =
             super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)?.copy()
                 as? UICollectionViewLayoutAttributes
         
-        attr?.center = CGPoint(x: 100, y: 200)
+        if itemIndexPath.section <= 10 {
+//            print("final, s: \(itemIndexPath.section) i:\(itemIndexPath.row), \(attr?.center.x), \(attr?.center.y)")
+        }
+        
+        
+        if let attr = attr {
+            attr.center = CGPoint(x: attr.center.x + attr.bounds.size.width, y: attr.center.y)
+        }
+        
+        if let attr = attr {
+//            attr.center = CGPoint.zero
+        }
+        
+        
+        
         
         return attr;
     }
-    */
+ 
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }

@@ -19,11 +19,48 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     @IBOutlet weak var collectionView: MomentsCommonCollectionView!
     
     @IBAction func barButton1Tapped(_ sender: UIBarButtonItem) {
-        collectionView.setCollectionViewLayout(MomentsCommonCollectionView.flowLayout(of: .Moments), animated: true)
+        
+        
+        
+        UIView.animate(withDuration: 3.0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
+            
+            
+//            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.collectionView.collectionViewLayout = MomentsCommonCollectionView.flowLayout(of: .Moments)
+            self.collectionView.reloadSections(IndexSet(integersIn: 0...20))
+//            self.collectionView.collectionViewLayout.invalidateLayout()
+//            self.collectionView.layoutIfNeeded()
+            
+            
+        }, completion: nil)
+ 
+        
+        /*
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
+           
+            self.collectionView.collectionViewLayout.invalidateLayout()
+//            self.collectionView.collectionViewLayout = MomentsCommonCollectionView.flowLayout(of: .Moments)
+//            self.collectionView.layoutIfNeeded()
+            
+        }, completion: { finished in
+            
+            self.collectionView.reloadData()
+            
+        })
+        */
     }
     
     @IBAction func barButton2Tapped(_ sender: UIBarButtonItem) {
-        collectionView.setCollectionViewLayout(MomentsCommonCollectionView.flowLayout(of: .MomentsCluster), animated: true)
+       /*
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
+            
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.collectionView.collectionViewLayout = MomentsCommonCollectionView.flowLayout(of: .MomentsCluster)
+            self.collectionView.layoutIfNeeded()
+        }, completion: nil)
+    */
+        
+        self.collectionView.setCollectionViewLayout(MomentsCommonCollectionView.flowLayout(of: .MomentsCluster), animated: true)
     }
     
     // MARK: - View Cycle
