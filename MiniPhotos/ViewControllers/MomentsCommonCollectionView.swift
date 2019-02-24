@@ -97,6 +97,9 @@ class MomentsCommonCollectionView: UICollectionView {
         flowLayout.minimumLineSpacing = self.spacing(of: collectionViewType)
         flowLayout.minimumInteritemSpacing = MomentsCommonCollectionView.spacing(of: collectionViewType)
         flowLayout.headerReferenceSize = CGSize(width: 50, height: 50)
+        
+        
+        
         return flowLayout
     }
     

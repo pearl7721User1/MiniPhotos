@@ -67,6 +67,11 @@ class PhotosNavigationController: UINavigationController {
         if let indexPathNavigatiable = momentsViewController as? IndexPathNavigation,
             let endingIndexPath = endingIndexPath {
             
+            
+            
+            
+            
+            
             indexPathNavigatiable.navigate(to: endingIndexPath)
             
             // animation transform for cell
@@ -103,6 +108,9 @@ class PhotosNavigationController: UINavigationController {
 //            momentsViewController.collectionView.contentOffsetRect(for: endingIndexPath)
             
         }
+        
+        // reload sections
+        //momentsClusterViewController.reloadRequiredSections()
         
         self.pushViewController(momentsViewController, animated: true)
     

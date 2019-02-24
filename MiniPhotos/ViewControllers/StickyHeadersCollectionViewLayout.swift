@@ -19,8 +19,8 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
             super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)?.copy()
                 as? UICollectionViewLayoutAttributes
         
-        if itemIndexPath.section <= 10 {
-           print("initial, s: \(itemIndexPath.section) i:\(itemIndexPath.row), \(attr?.center.x), \(attr?.center.y)")
+        if itemIndexPath.section <= 5 {
+//           print("initial, s: \(itemIndexPath.section) i:\(itemIndexPath.row), \(attr?.frame.origin.x), \(attr?.frame.origin.y)")
         }
         
         if let attr = attr {

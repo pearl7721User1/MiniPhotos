@@ -24,7 +24,7 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
  
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 1.0
+        return 3.0
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -38,33 +38,37 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
         let containerView = transitionContext.containerView
         let startingFrame = transitionContext.initialFrame(for: fromViewController)
         let finalFrame = transitionContext.finalFrame(for: toViewController)
-        
-        let fromLayout = MomentsCommonCollectionView.flowLayout(of: .MomentsCluster)
-        let toLayout = MomentsCommonCollectionView.flowLayout(of: .Moments)
-        
+        fromViewController.view.frame = startingFrame
         toViewController.view.frame = finalFrame
-        containerView.addSubview(toViewController.view)
-        toViewController.collectionView.setCollectionViewLayout(fromLayout, animated: false)
         
-        /*
-        toViewController.collectionView.setCollectionViewLayout(toLayout, animated: false) { (finished) in
-            toViewController.view.frame = finalFrame
-            containerView.addSubview(toViewController.view)
-            transitionContext.completeTransition(finished)
+/*
+        let a = containerView.subviews.count
+        
+        if let first = containerView.subviews.first {
+            
+            if first === fromViewController.view {
+                print("asdfasdfs")
+            }
+            
         }
-        */
+        
+*/
+        
+        let reloadRequiredSections = fromViewController.reloadRequiredSections()
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
             
-            toViewController.collectionView.setCollectionViewLayout(toLayout, animated: false)
+            fromViewController.collectionView.reloadSections(reloadRequiredSections)
             toViewController.navigate(to: self.indexPath)
+            fromViewController.view.alpha = 0.99
             
         }, completion: { (finished) in
             
+            fromViewController.view.alpha = 1.0
+            containerView.addSubview(toViewController.view)
             transitionContext.completeTransition(finished)
             
         })
-        
         
         
     }
