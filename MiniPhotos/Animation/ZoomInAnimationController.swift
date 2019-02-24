@@ -21,10 +21,9 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
         self.animationTransform = animationTransform
         self.indexPath = indexPath
     }
- 
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 3.0
+        return 1.0
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -41,18 +40,8 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
         fromViewController.view.frame = startingFrame
         toViewController.view.frame = finalFrame
         
-/*
-        let a = containerView.subviews.count
-        
-        if let first = containerView.subviews.first {
-            
-            if first === fromViewController.view {
-                print("asdfasdfs")
-            }
-            
-        }
-        
-*/
+        containerView.addSubview(toViewController.view)
+        toViewController.view.alpha = 0.0
         
         let reloadRequiredSections = fromViewController.reloadRequiredSections()
         
@@ -60,12 +49,15 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
             
             fromViewController.collectionView.reloadSections(reloadRequiredSections)
             toViewController.navigate(to: self.indexPath)
+            toViewController.collectionView.reloadSections(reloadRequiredSections)
             fromViewController.view.alpha = 0.99
+            toViewController.view.alpha = 1.0
             
         }, completion: { (finished) in
             
             fromViewController.view.alpha = 1.0
-            containerView.addSubview(toViewController.view)
+            toViewController.view.alpha = 1.0
+            
             transitionContext.completeTransition(finished)
             
         })
