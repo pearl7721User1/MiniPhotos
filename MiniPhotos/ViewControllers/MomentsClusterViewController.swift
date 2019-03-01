@@ -215,7 +215,10 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let phAsset = filteredPHAssetGroups[indexPath.section].phAssets[indexPath.row]
-        (self.navigationController as! PhotosNavigationController).zoomIn(to: phAsset, from: indexPath)
+        let originFromVisibleContent = self.collectionView.offsetFromVisibleContent(indexPath: indexPath)
+        
+        (self.navigationController as! PhotosNavigationController).zoomIn(to: phAsset, originFromVisibleContent: originFromVisibleContent)
+        
     }
     
     private func saveImages(from phAssetGroups:[FilteredClusterPHAssetGroup], to cache:NSCache<NSString, UIImage>) {

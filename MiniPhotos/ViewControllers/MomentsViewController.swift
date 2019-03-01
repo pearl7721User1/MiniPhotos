@@ -127,8 +127,20 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
     }
     
     // MARK: - IndexPathNavigation
-    func navigate(to indexPath:IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: [.left, .centeredVertically], animated: false)
+    
+    func navigate(to indexPath:IndexPath, originFromVisibleContent:CGPoint) {
+        
+        print("c:\(collectionView.contentOffset.x) \(collectionView.contentOffset.y)")
+        
+        collectionView.scrollToItem(at: indexPath, at: [.left, .top], animated: false)
+        
+        print("nc:\(collectionView.contentOffset.x) \(collectionView.contentOffset.y)")
+        
+        let newContentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.contentOffset.y - originFromVisibleContent.y)
+        
+        collectionView.setContentOffset(newContentOffset, animated: false)
+        
+        print("nc2:\(collectionView.contentOffset.x) \(collectionView.contentOffset.y)")
     }
     
     

@@ -49,7 +49,7 @@ class PhotosNavigationController: UINavigationController {
     
     
     
-    func zoomIn(to phAsset: PHAsset, from startingIndexPath: IndexPath) {
+    func zoomIn(to phAsset: PHAsset, originFromVisibleContent: CGPoint) {
         // what this function does:
         // 1 check the navigation stack status and see if zooming in is possible
         // 2 If it is, navigate
@@ -68,12 +68,8 @@ class PhotosNavigationController: UINavigationController {
             let endingIndexPath = endingIndexPath {
             
             
-            
-            
-            
-            
-            indexPathNavigatiable.navigate(to: endingIndexPath)
-            
+            indexPathNavigatiable.navigate(to: endingIndexPath, originFromVisibleContent:originFromVisibleContent)
+            /*
             // animation transform for cell
             let startingFrameForCell = momentsClusterViewController.collectionView.contentOffsetRect(for: startingIndexPath)
             let endingFrameForCell = momentsViewController.collectionView.contentOffsetRect(for: endingIndexPath)
@@ -81,7 +77,7 @@ class PhotosNavigationController: UINavigationController {
             let scaleFactor = CGSize(width: endingFrameForCell.size.width / startingFrameForCell.size.width, height: endingFrameForCell.size.height / startingFrameForCell.size.height)
             
             let animationTransformForCell = animationTransform(startingFrame: startingFrameForCell, destinationPoint: endingFrameForCell.origin, scale: scaleFactor)
-            
+            */
             
             
             /*
@@ -100,10 +96,10 @@ class PhotosNavigationController: UINavigationController {
 //            bgView.frame = momentsClusterViewController.collectionView.contentOffsetRect(for: startingIndexPath)
             
             // CGSize.init(width: 2, height: 2)
-            let animationTransformForBg = animationTransform(startingFrame: bgView.frame, destinationPoint: endingFrameForCell.origin, scale:scaleFactor )
-            print("\(bgView.frame.origin.x), \(bgView.frame.origin.y), \(bgView.frame.size.width), \(bgView.frame.size.height)")
+//           let animationTransformForBg = animationTransform(startingFrame: bgView.frame, destinationPoint: endingFrameForCell.origin, scale:scaleFactor )
+//            print("\(bgView.frame.origin.x), \(bgView.frame.origin.y), \(bgView.frame.size.width), \(bgView.frame.size.height)")
             
-            self.zoomInAnimationController = ZoomInPopupAnimationController(cellOfInterestSnapshot: UIView(), backgroundViewSnapshot:bgView, animationTransform: animationTransformForBg, indexPath:endingIndexPath)
+            self.zoomInAnimationController = ZoomInPopupAnimationController(cellOfInterestSnapshot: UIView(), backgroundViewSnapshot:bgView, animationTransform: CGAffineTransform.identity, indexPath:endingIndexPath)
             
 //            momentsViewController.collectionView.contentOffsetRect(for: endingIndexPath)
             
@@ -112,7 +108,7 @@ class PhotosNavigationController: UINavigationController {
         // reload sections
         //momentsClusterViewController.reloadRequiredSections()
         
-        self.pushViewController(momentsViewController, animated: true)
+        self.pushViewController(momentsViewController, animated: false)
     
     }
     
@@ -158,5 +154,6 @@ extension PhotosNavigationController: UINavigationControllerDelegate {
 
 protocol IndexPathNavigation {
     
-    func navigate(to indexPath:IndexPath)
+    func navigate(to indexPath:IndexPath, originFromVisibleContent:CGPoint)
+    
 }

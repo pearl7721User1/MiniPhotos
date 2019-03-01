@@ -47,6 +47,17 @@ class MomentsCommonCollectionView: UICollectionView {
         
     }
     */
+    
+    func offsetFromVisibleContent(indexPath: IndexPath) -> CGPoint {
+        
+        guard let attribute = collectionViewLayout.layoutAttributesForItem(at: indexPath) else {
+            return CGPoint.zero
+        }
+        
+        return CGPoint(x:attribute.frame.minX, y:attribute.frame.minY - self.contentOffset.y)
+        
+    }
+    
     func contentOffsetRect(for indexPath:IndexPath) -> CGRect {
         let attribute = collectionViewLayout.layoutAttributesForItem(at: indexPath)
         print("\(attribute?.frame.origin.x), \(attribute?.frame.origin.y), \(contentOffset.y)")
