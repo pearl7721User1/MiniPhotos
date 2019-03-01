@@ -53,6 +53,11 @@ class PhotosNavigationController: UINavigationController {
         // what this function does:
         // 1 check the navigation stack status and see if zooming in is possible
         // 2 If it is, navigate
+        
+        if momentsViewController != nil {
+            print("asdfsdf")
+        }
+        
 
         let destinationIndexPath = momentsViewController.indexPath(containing: phAsset)
         let referenceIndexPath = momentsClusterViewController.indexPath(containing: phAsset)

@@ -164,7 +164,7 @@
             </objects>
             <point key="canvasLocation" x="378" y="779"/>
         </scene>
-        <!--Moments Cluster-->
+        <!--Moments Cluster View Controller-->
         <scene sceneID="q6F-1K-mqh">
             <objects>
                 <viewController storyboardIdentifier="MomentsClusterViewController" id="BDt-ry-U5u" customClass="MomentsClusterViewController" customModule="MiniPhotos" customModuleProvider="target" sceneMemberID="viewController">
@@ -254,7 +254,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="STM-sd-iHr"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Moments Cluster" id="DvW-b9-33S">
+                    <navigationItem key="navigationItem" id="DvW-b9-33S">
                         <rightBarButtonItems>
                             <barButtonItem title="Item" id="lwo-AR-zKm">
                                 <connections>

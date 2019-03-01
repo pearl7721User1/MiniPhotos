@@ -22,18 +22,20 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
 
         collectionView.collectionViewType = .Moments
         
-        var leftBarButtonItem: UIBarButtonItem {
-            let backArrowImage = UIImage(named: "backArrow")
-            let leftButton : UIButton = UIButton(type: UIButtonType.system)
-            leftButton.setImage(backArrowImage, for: .normal)
-            leftButton.setTitle(" Back", for: .normal)
-            leftButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-            leftButton.addTarget(self, action: #selector(backAction(sender:)), for: .touchUpInside)
-            
-            return UIBarButtonItem(customView: leftButton)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        /*
+        if self.isMovingToParentViewController {
+            // Your code...
+            print("movingTo")
         }
-        
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+        */
+        if self.isMovingFromParentViewController {
+            
+            print("movingFrom")
+        }
     }
     
     @objc func backAction(sender: UIBarButtonItem) {
@@ -127,10 +129,9 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
     }
     
     // MARK: - IndexPathNavigation
-    
     func navigate(to indexPath:IndexPath, originFromVisibleContent:CGPoint) {
         
-        collectionView.scrollToItem(at: indexPath, at: [.left, .top], animated: false)    
+        collectionView.scrollToItem(at: indexPath, at: [.left, .top], animated: false)
         let newContentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.contentOffset.y - originFromVisibleContent.y)
         collectionView.setContentOffset(newContentOffset, animated: false)
         
