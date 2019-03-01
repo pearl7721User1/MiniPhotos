@@ -130,17 +130,10 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
     
     func navigate(to indexPath:IndexPath, originFromVisibleContent:CGPoint) {
         
-        print("c:\(collectionView.contentOffset.x) \(collectionView.contentOffset.y)")
-        
-        collectionView.scrollToItem(at: indexPath, at: [.left, .top], animated: false)
-        
-        print("nc:\(collectionView.contentOffset.x) \(collectionView.contentOffset.y)")
-        
+        collectionView.scrollToItem(at: indexPath, at: [.left, .top], animated: false)    
         let newContentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.contentOffset.y - originFromVisibleContent.y)
-        
         collectionView.setContentOffset(newContentOffset, animated: false)
         
-        print("nc2:\(collectionView.contentOffset.x) \(collectionView.contentOffset.y)")
     }
     
     func visiblePHAssets() -> [PHAsset] {
