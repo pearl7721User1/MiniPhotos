@@ -12,7 +12,7 @@ import UIKit
 class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     var disappearingTransitionInfo: IndexPathTransitionInfo?
-    var topOffset: CGFloat = 64
+    var topOffset: CGFloat = 0
     
     override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         

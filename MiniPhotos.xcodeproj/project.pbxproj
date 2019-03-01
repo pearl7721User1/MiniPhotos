@@ -13,6 +13,7 @@
 		EE20F9AA2228E5E90006225D /* GiwonVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9A72228E5E80006225D /* GiwonVector.swift */; };
 		EE20F9AB2228E5E90006225D /* VectorCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9A82228E5E80006225D /* VectorCalculator.swift */; };
 		EE20F9AD2228E7040006225D /* IndexPathTransitionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9AC2228E7040006225D /* IndexPathTransitionInfo.swift */; };
+		EE20F9AF22292D9A0006225D /* SampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9AE22292D9A0006225D /* SampleViewController.swift */; };
 		EE33AA3D220FDC9400E0BE8C /* ZoomInAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE33AA3C220FDC9400E0BE8C /* ZoomInAnimationController.swift */; };
 		EECAC50821BD1CFB000FEA4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */; };
 		EECAC50D21BD1CFB000FEA4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EECAC50B21BD1CFB000FEA4F /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		EE20F9A72228E5E80006225D /* GiwonVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiwonVector.swift; sourceTree = "<group>"; };
 		EE20F9A82228E5E80006225D /* VectorCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorCalculator.swift; sourceTree = "<group>"; };
 		EE20F9AC2228E7040006225D /* IndexPathTransitionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathTransitionInfo.swift; sourceTree = "<group>"; };
+		EE20F9AE22292D9A0006225D /* SampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewController.swift; sourceTree = "<group>"; };
 		EE33AA3C220FDC9400E0BE8C /* ZoomInAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomInAnimationController.swift; sourceTree = "<group>"; };
 		EECAC50421BD1CFB000FEA4F /* MiniPhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniPhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				EECAC53321BEA003000FEA4F /* MomentsViewController.swift */,
 				EECAC53721BEA024000FEA4F /* MomentsCommonCollectionView.swift */,
 				EECAC53921BEA02C000FEA4F /* StickyHeadersCollectionViewLayout.swift */,
+				EE20F9AE22292D9A0006225D /* SampleViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				EECAC52C21BE9FBD000FEA4F /* MomentsPHAssetGroup.swift in Sources */,
 				EECAC53221BE9FCE000FEA4F /* MomentsClusterViewController.swift in Sources */,
 				EECAC53121BE9FCE000FEA4F /* PhotosNavigationModelProvider.swift in Sources */,
+				EE20F9AF22292D9A0006225D /* SampleViewController.swift in Sources */,
 				EECAC53821BEA024000FEA4F /* MomentsCommonCollectionView.swift in Sources */,
 				EE20F9AD2228E7040006225D /* IndexPathTransitionInfo.swift in Sources */,
 				EECAC53C21BEA0E5000FEA4F /* ViewForPermissionUnavailable.swift in Sources */,

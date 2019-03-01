@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AUd-d0-vbX" customClass="MomentsCommonCollectionView" customModule="MiniPhotos">
-                                <rect key="frame" x="0.0" y="-44" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Wn8-lw-qRQ">
                                     <size key="itemSize" width="80" height="80"/>
@@ -94,7 +94,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="11M-9p-Ds5" firstAttribute="bottom" secondItem="AUd-d0-vbX" secondAttribute="bottom" id="5Al-lV-9wW"/>
-                            <constraint firstItem="AUd-d0-vbX" firstAttribute="top" secondItem="11M-9p-Ds5" secondAttribute="top" constant="-64" id="VS7-We-ked"/>
+                            <constraint firstItem="AUd-d0-vbX" firstAttribute="top" secondItem="11M-9p-Ds5" secondAttribute="top" id="VS7-We-ked"/>
                             <constraint firstItem="11M-9p-Ds5" firstAttribute="trailing" secondItem="AUd-d0-vbX" secondAttribute="trailing" id="YyC-R3-u2K"/>
                             <constraint firstItem="AUd-d0-vbX" firstAttribute="leading" secondItem="11M-9p-Ds5" secondAttribute="leading" id="juh-r2-WY6"/>
                         </constraints>
