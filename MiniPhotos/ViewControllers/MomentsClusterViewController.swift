@@ -221,6 +221,60 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         
     }
     
+    func visibleIndexPaths(excluding phAssets: [PHAsset]) -> [IndexPath] {
+        
+        let visibleIndexPaths = self.collectionView.visibleCells.map{self.collectionView.indexPath(for:
+            $0)}.filter{$0 != nil}
+        
+        var excludingIndexPaths = [IndexPath]()
+        for (i,v) in phAssets.enumerated() {
+            if let theIndexPath = indexPath(containing: v) {
+                excludingIndexPaths.append(theIndexPath)
+            }
+        }
+        
+        let ExclusionCompletedIndexPaths = visibleIndexPaths.filter { (indexPath: IndexPath?) -> Bool in
+            
+            let indexPath = indexPath!
+            
+            for (i,v) in excludingIndexPaths.enumerated() {
+                if v == indexPath {
+                    return false
+                }
+            }
+            
+            return true
+        }
+        
+        var theIndexPaths = [IndexPath]()
+        for (i,v) in ExclusionCompletedIndexPaths.enumerated() {
+            
+            if let indexPath = v {
+                theIndexPaths.append(indexPath)
+            }
+            
+        }
+        
+        return theIndexPaths
+    }
+    
+    func indexPath(containing phAsset:PHAsset) -> IndexPath? {
+        
+        for (i,v) in filteredPHAssetGroups.enumerated() {
+            for (j,u) in v.phAssets.enumerated() {
+                if u.isEqual(phAsset) {
+                    return IndexPath(item: j, section: i)
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    func setDisappearingTransitionInfo(info: IndexPathTransitionInfo) {
+        (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).disappearingTransitionInfo = info
+    }
+    
     private func saveImages(from phAssetGroups:[FilteredClusterPHAssetGroup], to cache:NSCache<NSString, UIImage>) {
         
         // create request options for all thumbnail images to cache them

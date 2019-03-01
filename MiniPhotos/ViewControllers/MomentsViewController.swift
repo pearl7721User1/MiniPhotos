@@ -143,6 +143,28 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
         print("nc2:\(collectionView.contentOffset.x) \(collectionView.contentOffset.y)")
     }
     
+    func visiblePHAssets() -> [PHAsset] {
+        
+        guard let phAssetGroups = phAssetGroups else {
+            return [PHAsset]()
+        }
+        
+        let visibleIndexPaths = self.collectionView.visibleCells.map{self.collectionView.indexPath(for: $0)}.filter{$0 != nil}
+        
+        return visibleIndexPaths.map{phAssetGroups[$0!.section].phAssets[$0!.row]}
+        
+    }
     
-    
+    func indexPath(containing phAsset:PHAsset) -> IndexPath? {
+        
+        for (i,v) in phAssetGroups.enumerated() {
+            for (j,u) in v.phAssets.enumerated() {
+                if u.isEqual(phAsset) {
+                    return IndexPath(item: j, section: i)
+                }
+            }
+        }
+        
+        return nil
+    }
 }

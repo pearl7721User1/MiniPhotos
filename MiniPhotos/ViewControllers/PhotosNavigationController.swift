@@ -54,61 +54,31 @@ class PhotosNavigationController: UINavigationController {
         // 1 check the navigation stack status and see if zooming in is possible
         // 2 If it is, navigate
 
-        var endingIndexPath: IndexPath?
-        for (i,v) in momentsPHAssetGroups.enumerated() {
-            
-            for (j,w) in v.phAssets.enumerated() {
-                if phAsset.isEqual(w) {
-                    endingIndexPath = IndexPath(item: j, section: i)
-                }
-            }
-        }
-    
+        let destinationIndexPath = momentsViewController.indexPath(containing: phAsset)
+        let referenceIndexPath = momentsClusterViewController.indexPath(containing: phAsset)
+        
         if let indexPathNavigatiable = momentsViewController as? IndexPathNavigation,
-            let endingIndexPath = endingIndexPath {
+            let destinationIndexPath = destinationIndexPath,
+            let referenceIndexPath = referenceIndexPath {
             
+            indexPathNavigatiable.navigate(to: destinationIndexPath, originFromVisibleContent:originFromVisibleContent)
             
-            indexPathNavigatiable.navigate(to: endingIndexPath, originFromVisibleContent:originFromVisibleContent)
-            /*
-            // animation transform for cell
-            let startingFrameForCell = momentsClusterViewController.collectionView.contentOffsetRect(for: startingIndexPath)
-            let endingFrameForCell = momentsViewController.collectionView.contentOffsetRect(for: endingIndexPath)
+            // get disappearing indexpaths
+            let excludedPHAssets = momentsViewController.visiblePHAssets()
+            let disappearingIndexPaths = momentsClusterViewController.visibleIndexPaths(excluding: excludedPHAssets)
+            let transitionInfo = indexPathTransitionInfo(indexPaths: disappearingIndexPaths, refIndexPath: referenceIndexPath)
+            momentsClusterViewController.setDisappearingTransitionInfo(info: transitionInfo)
             
-            let scaleFactor = CGSize(width: endingFrameForCell.size.width / startingFrameForCell.size.width, height: endingFrameForCell.size.height / startingFrameForCell.size.height)
-            
-            let animationTransformForCell = animationTransform(startingFrame: startingFrameForCell, destinationPoint: endingFrameForCell.origin, scale: scaleFactor)
-            */
-            
-            
-            /*
-            let scaleTransform = CGAffineTransform(scaleX: scaleFactor.width, y: scaleFactor.height)
-            
-            let offset = CGPoint(x: (startingFrame.size.width * scaleFactor.width - startingFrame.size.width) / 2.0, y: (startingFrame.size.height * scaleFactor.height - startingFrame.size.height) / 2.0)
-            
-            let translateTransform = CGAffineTransform(translationX: endingFrame.origin.x - startingFrame.origin.x + offset.x, y: endingFrame.origin.y - startingFrame.origin.y + offset.y)
-            
-            let animationTransform = scaleTransform.concatenating(translateTransform)
-            */
             
             // animation transform for background
             let bgView = momentsClusterViewController.collectionView.snapshotView(afterScreenUpdates: true) ?? UIView()
-//            bgView.backgroundColor = UIColor.green
-//            bgView.frame = momentsClusterViewController.collectionView.contentOffsetRect(for: startingIndexPath)
-            
-            // CGSize.init(width: 2, height: 2)
-//           let animationTransformForBg = animationTransform(startingFrame: bgView.frame, destinationPoint: endingFrameForCell.origin, scale:scaleFactor )
-//            print("\(bgView.frame.origin.x), \(bgView.frame.origin.y), \(bgView.frame.size.width), \(bgView.frame.size.height)")
-            
-            self.zoomInAnimationController = ZoomInPopupAnimationController(cellOfInterestSnapshot: UIView(), backgroundViewSnapshot:bgView, animationTransform: CGAffineTransform.identity, indexPath:endingIndexPath)
-            
-//            momentsViewController.collectionView.contentOffsetRect(for: endingIndexPath)
+
+            self.zoomInAnimationController = ZoomInPopupAnimationController(cellOfInterestSnapshot: UIView(), backgroundViewSnapshot:bgView, animationTransform: CGAffineTransform.identity, indexPath:destinationIndexPath)
             
         }
         
-        // reload sections
-        //momentsClusterViewController.reloadRequiredSections()
         
-        self.pushViewController(momentsViewController, animated: false)
+        self.pushViewController(momentsViewController, animated: true)
     
     }
     
@@ -123,6 +93,39 @@ class PhotosNavigationController: UINavigationController {
 //        self.momentsClusterViewController!.phAssetsToShowAtViewLoad = phAsset
         self.popViewController(animated: true)
         
+    }
+    
+    private func indexPathTransitionInfo(indexPaths:[IndexPath], refIndexPath:IndexPath) -> IndexPathTransitionInfo {
+        
+        var refRect: CGRect {
+            if let attributeItem = momentsClusterViewController.collectionView.collectionViewLayout.layoutAttributesForItem(at: refIndexPath) {
+                return attributeItem.frame
+            } else {
+                return CGRect.zero
+            }
+        }
+        
+        var info = IndexPathTransitionInfo()
+        
+        for (i,v) in indexPaths.enumerated() {
+            if let item = momentsClusterViewController.collectionView.collectionViewLayout.layoutAttributesForItem(at: v) {
+                
+                let vector = reverseVector(boundary: momentsClusterViewController.collectionView.bounds, startingRect: item.frame, refRect: refRect)
+                
+                info.add(indexPath: v, vector: vector)
+            }
+        }
+        
+        return info
+    }
+    
+    private func reverseVector(boundary:CGRect, startingRect:CGRect, refRect:CGRect) -> GiwonVector {
+        
+        let calculator = VectorCalculator(boundaryRect: boundary)
+        let pointer = CGPoint(x:startingRect.midX - refRect.midX, y:startingRect.midY - refRect.midY)
+        
+        let vector = calculator.vectorForReachingBoundary(lengthOfOneStep: 10, pointer: pointer, from: CGPoint(x: startingRect.midX, y: startingRect.midY))
+        return vector
     }
     
     private func animationTransform(startingFrame: CGRect, destinationPoint: CGPoint, scale:CGSize) -> CGAffineTransform {

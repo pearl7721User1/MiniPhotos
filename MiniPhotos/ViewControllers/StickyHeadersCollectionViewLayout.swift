@@ -11,6 +11,7 @@ import UIKit
 
 class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    var disappearingTransitionInfo: IndexPathTransitionInfo?
     var topOffset: CGFloat = 64
     
     override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -37,24 +38,19 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
             super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)?.copy()
                 as? UICollectionViewLayoutAttributes
         
-        if itemIndexPath.section <= 10 {
-//            print("final, s: \(itemIndexPath.section) i:\(itemIndexPath.row), \(attr?.center.x), \(attr?.center.y)")
+        if let attr = attr,
+            let transitionInfo = self.disappearingTransitionInfo,
+            let vector = transitionInfo.vector(for: itemIndexPath) {
+            
+            attr.center = attr.center.move(vector: vector)
+            
         }
-        
-        
-        if let attr = attr {
-            attr.center = CGPoint(x: attr.center.x + attr.bounds.size.width, y: attr.center.y)
-        }
-        
-        if let attr = attr {
-//            attr.center = CGPoint.zero
-        }
-        
-        
         
         
         return attr;
     }
+    
+    
  
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true

@@ -23,7 +23,7 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 1.0
+        return 3.0
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -48,7 +48,6 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
             
             fromViewController.collectionView.reloadSections(reloadRequiredSections)
-//            toViewController.navigate(to: self.indexPath, originFromVisibleContent: <#CGPoint#>)
             toViewController.collectionView.reloadSections(reloadRequiredSections)
             fromViewController.view.alpha = 0.99
             toViewController.view.alpha = 1.0
