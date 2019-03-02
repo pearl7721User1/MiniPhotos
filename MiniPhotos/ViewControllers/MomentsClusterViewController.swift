@@ -160,7 +160,7 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let phAsset = filteredPHAssetGroups[indexPath.section].phAssets[indexPath.row]
-        let originFromVisibleContent = self.collectionView.offsetFromVisibleContent(indexPath: indexPath)
+        let originFromVisibleContent = self.collectionView.originFromVisibleContent(indexPath: indexPath)
         
         (self.navigationController as! PhotosNavigationController).zoomIn(to: phAsset, originFromVisibleContent: originFromVisibleContent)
         
@@ -214,6 +214,19 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         }
         
         return nil
+    }
+    
+    func rectsFromVisibleContent(indexPaths:[IndexPath]) -> [CGRect] {
+        
+        let rects = indexPaths.map { (indexPath) -> CGRect in
+            
+            let origin = self.collectionView.originFromVisibleContent(indexPath: indexPath)
+            let size = (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+            
+            return CGRect(origin: origin, size: size)
+        }
+        
+        return rects
     }
     
     func setDisappearingTransitionInfo(info: IndexPathTransitionInfo) {

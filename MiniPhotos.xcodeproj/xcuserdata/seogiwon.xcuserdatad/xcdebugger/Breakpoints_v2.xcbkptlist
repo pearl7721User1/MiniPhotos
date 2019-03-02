@@ -10,13 +10,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MiniPhotos/Structures/ClusterPHAssetGroup.swift"
-            timestampString = "573146708.5090801"
+            timestampString = "573223945.074042"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
             endingLineNumber = "39"
             landmarkName = "init(phCollectionList:allPHAssets:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MiniPhotos/ViewControllers/PhotosNavigationController.swift"
+            timestampString = "573223945.074955"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "vector(startingRect:refRect:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MiniPhotos/ViewControllers/MomentsViewController.swift"
+            timestampString = "573223945.07557"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "visiblePHAssets()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MiniPhotos.MomentsViewController.visiblePHAssets() -&gt; Swift.Array&lt;__C.PHAsset&gt;"
+                  moduleName = "MiniPhotos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seogiwon/MiniPhotos/MiniPhotos/ViewControllers/MomentsViewController.swift"
+                  timestampString = "573223946.496122"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Foundation.IndexPath) -&gt; __C.PHAsset in MiniPhotos.MomentsViewController.visiblePHAssets() -&gt; Swift.Array&lt;__C.PHAsset&gt;"
+                  moduleName = "MiniPhotos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/seogiwon/MiniPhotos/MiniPhotos/ViewControllers/MomentsViewController.swift"
+                  timestampString = "573223946.501702"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

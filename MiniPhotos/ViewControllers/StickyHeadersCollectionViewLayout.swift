@@ -25,7 +25,7 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         
         if let attr = attr {
-            attr.center = CGPoint.zero
+//            attr.center = CGPoint.zero
         }
         
         
@@ -43,7 +43,7 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
             let vector = transitionInfo.vector(for: itemIndexPath) {
             
             attr.center = attr.center.move(vector: vector)
-            
+            attr.transform = CGAffineTransform(scaleX: transitionInfo.scale.width, y: transitionInfo.scale.height)
         }
         
         

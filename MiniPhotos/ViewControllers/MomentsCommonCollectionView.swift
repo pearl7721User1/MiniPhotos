@@ -48,7 +48,7 @@ class MomentsCommonCollectionView: UICollectionView {
     }
     */
     
-    func offsetFromVisibleContent(indexPath: IndexPath) -> CGPoint {
+    func originFromVisibleContent(indexPath: IndexPath) -> CGPoint {
         
         guard let attribute = collectionViewLayout.layoutAttributesForItem(at: indexPath) else {
             return CGPoint.zero
@@ -72,7 +72,18 @@ class MomentsCommonCollectionView: UICollectionView {
         
         return rect
     }
-
+    
+    func visibleIndexPaths() -> [IndexPath] {
+        let visibleRect = CGRect(origin: self.contentOffset, size: self.bounds.size)
+        
+        guard let layoutAttributes = self.collectionViewLayout.layoutAttributesForElements(in: visibleRect) else {
+            return [IndexPath]()
+        }
+        
+        let indexPaths = layoutAttributes.filter{$0.representedElementCategory == .cell}.map{$0.indexPath}
+        return indexPaths
+    }
+    
     func thumbnailSize() -> CGSize {
         
         let scale = UIScreen.main.scale

@@ -143,10 +143,26 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
             return [PHAsset]()
         }
         
-        let visibleIndexPaths = self.collectionView.visibleCells.map{self.collectionView.indexPath(for: $0)}.filter{$0 != nil}
+//        let visibleIndexPaths = self.collectionView.visibleCells.map{self.collectionView.indexPath(for: $0)}.filter{$0 != nil}
         
-        return visibleIndexPaths.map{phAssetGroups[$0!.section].phAssets[$0!.row]}
+        let visibleIndexPaths = self.collectionView.visibleIndexPaths()
         
+        
+        return visibleIndexPaths.map{phAssetGroups[$0.section].phAssets[$0.row]}
+        
+    }
+    
+    func rectsFromVisibleContent(indexPaths:[IndexPath]) -> [CGRect] {
+        
+        let rects = indexPaths.map { (indexPath) -> CGRect in
+            
+            let origin = self.collectionView.originFromVisibleContent(indexPath: indexPath)
+            let size = (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+            
+            return CGRect(origin: origin, size: size)
+        }
+        
+        return rects
     }
     
     func indexPath(containing phAsset:PHAsset) -> IndexPath? {

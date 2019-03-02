@@ -54,9 +54,6 @@ class PhotosNavigationController: UINavigationController {
         // 1 check the navigation stack status and see if zooming in is possible
         // 2 If it is, navigate
         
-        if momentsViewController != nil {
-            print("asdfsdf")
-        }
         
 
         let destinationIndexPath = momentsViewController.indexPath(containing: phAsset)
@@ -71,7 +68,36 @@ class PhotosNavigationController: UINavigationController {
             // get disappearing indexpaths
             let excludedPHAssets = momentsViewController.visiblePHAssets()
             let disappearingIndexPaths = momentsClusterViewController.visibleIndexPaths(excluding: excludedPHAssets)
-            let transitionInfo = indexPathTransitionInfo(indexPaths: disappearingIndexPaths, refIndexPath: referenceIndexPath)
+            let transitionInfoForDisappearance = disappearingCellTransitionInfo(indexPaths: disappearingIndexPaths, refIndexPath: referenceIndexPath)
+            
+            var movingIndexPathsForStarting: [IndexPath] {
+                var indexPaths = [IndexPath]()
+                for (i,v) in excludedPHAssets.enumerated() {
+                    if let indexPath = momentsClusterViewController.indexPath(containing: v) {
+                        indexPaths.append(indexPath)
+                    }
+                }
+                return indexPaths
+            }
+            
+            var movingIndexPathsForArriving: [IndexPath] {
+                var indexPaths = [IndexPath]()
+                for (i,v) in excludedPHAssets.enumerated() {
+                    if let indexPath = momentsViewController.indexPath(containing: v) {
+                        indexPaths.append(indexPath)
+                    }
+                }
+                return indexPaths
+            }
+            
+            let transitionInfoForMoving = movingCellTransitionInfo(startingIndexPaths: movingIndexPathsForStarting, arrivingIndexPaths: movingIndexPathsForArriving)
+            
+            var transitionInfo = IndexPathTransitionInfo()
+            transitionInfo.scale = transitionInfoForDisappearance.scale
+            transitionInfo.add(indexPathTransitionInfo: transitionInfoForDisappearance)
+            transitionInfo.add(indexPathTransitionInfo: transitionInfoForMoving)
+            
+            
             momentsClusterViewController.setDisappearingTransitionInfo(info: transitionInfo)
             
             
@@ -100,7 +126,27 @@ class PhotosNavigationController: UINavigationController {
         
     }
     
-    private func indexPathTransitionInfo(indexPaths:[IndexPath], refIndexPath:IndexPath) -> IndexPathTransitionInfo {
+    private func movingCellTransitionInfo(startingIndexPaths:[IndexPath], arrivingIndexPaths:[IndexPath]) -> IndexPathTransitionInfo {
+        
+        let startingRects = momentsClusterViewController.rectsFromVisibleContent(indexPaths: startingIndexPaths)
+        let arrivingRects = momentsViewController.rectsFromVisibleContent(indexPaths: arrivingIndexPaths)
+        
+        
+        var info = IndexPathTransitionInfo()
+        for (i,v) in startingRects.enumerated() {
+            
+            let startingRect = startingRects[i]
+            let arrivingRect = arrivingRects[i]
+            let startingIndexPath = startingIndexPaths[i]
+            
+            let theVector = vector(startingRect:startingRect, refRect:arrivingRect)
+            info.add(indexPath: startingIndexPath, vector: theVector)
+        }
+        
+        return info
+    }
+    
+    private func disappearingCellTransitionInfo(indexPaths:[IndexPath], refIndexPath:IndexPath) -> IndexPathTransitionInfo {
         
         var refRect: CGRect {
             if let attributeItem = momentsClusterViewController.collectionView.collectionViewLayout.layoutAttributesForItem(at: refIndexPath) {
@@ -121,6 +167,18 @@ class PhotosNavigationController: UINavigationController {
             }
         }
         
+        // add scale
+        var scale: CGSize {
+          
+            let startingThumbSize = (momentsClusterViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+            let destinationThumbSize = (momentsViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+                
+            return CGSize(width: destinationThumbSize.width / startingThumbSize.width, height: destinationThumbSize.height / startingThumbSize.height)
+        }
+
+        info.scale = scale
+        
+        
         return info
     }
     
@@ -129,9 +187,27 @@ class PhotosNavigationController: UINavigationController {
         let calculator = VectorCalculator(boundaryRect: boundary)
         let pointer = CGPoint(x:startingRect.midX - refRect.midX, y:startingRect.midY - refRect.midY)
         
-        let vector = calculator.vectorForReachingBoundary(lengthOfOneStep: 10, pointer: pointer, from: CGPoint(x: startingRect.midX, y: startingRect.midY))
+        var vector = calculator.vectorForReachingBoundary(lengthOfOneStep: 10, pointer: pointer, from: CGPoint(x: startingRect.midX, y: startingRect.midY))
+        
+        // giwon
+        vector.magnitude = 400
+        
         return vector
     }
+    
+    private func vector(startingRect:CGRect, refRect:CGRect) -> GiwonVector {
+        
+        let pointer = CGPoint(x:refRect.midX - startingRect.midX, y:refRect.midY - startingRect.midY)
+        let magnitude = sqrt(pow(abs(pointer.x),2) + pow(abs(pointer.y),2))
+        
+        // giwon
+        var vector = GiwonVector()
+        vector.pointer = pointer
+        vector.magnitude = magnitude
+        
+        return vector
+    }
+    
     
     private func animationTransform(startingFrame: CGRect, destinationPoint: CGPoint, scale:CGSize) -> CGAffineTransform {
         

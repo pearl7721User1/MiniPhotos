@@ -10,8 +10,9 @@ import UIKit
 
 struct IndexPathTransitionInfo {
     
-    private var indexPaths = [IndexPath]()
-    private var vectors = [GiwonVector]()
+    var indexPaths = [IndexPath]()
+    var vectors = [GiwonVector]()
+    var scale = CGSize(width: 1, height: 1)
     
     mutating func add(indexPath:IndexPath, vector:GiwonVector) {
         self.indexPaths.append(indexPath)
@@ -28,5 +29,10 @@ struct IndexPathTransitionInfo {
         }
         
         return nil
+    }
+    
+    mutating func add(indexPathTransitionInfo:IndexPathTransitionInfo) {
+        self.indexPaths.append(contentsOf: indexPathTransitionInfo.indexPaths)
+        self.vectors.append(contentsOf: indexPathTransitionInfo.vectors)
     }
 }
