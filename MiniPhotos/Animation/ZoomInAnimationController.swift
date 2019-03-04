@@ -43,12 +43,15 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
         containerView.addSubview(toViewController.view)
         toViewController.view.alpha = 0.0
         
-        let reloadRequiredSections = fromViewController.reloadRequiredSections()
+        let reloadRequiredSectionsForFromVC = fromViewController.reloadRequiredSections()
+        let reloadRequiredSectionsForToVC = toViewController.reloadRequiredSections()
+        
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
             
-            fromViewController.collectionView.reloadSections(reloadRequiredSections)
-            toViewController.collectionView.reloadSections(reloadRequiredSections)
+            fromViewController.collectionView.reloadSections(reloadRequiredSectionsForFromVC)
+            toViewController.collectionView.reloadSections(reloadRequiredSectionsForToVC)
+
             fromViewController.view.alpha = 0.99
             toViewController.view.alpha = 1.0
             

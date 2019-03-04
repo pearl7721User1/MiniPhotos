@@ -19,7 +19,7 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     @IBOutlet weak var collectionView: MomentsCommonCollectionView!
     
     func reloadRequiredSections() -> IndexSet {
-        let visibleIndexPaths = self.collectionView.indexPathsForVisibleItems
+        let visibleIndexPaths = self.collectionView.visibleIndexPaths()
         let sectionAscendingIndexPaths = visibleIndexPaths.sorted { (lv, rv) -> Bool in
             return lv.section <= rv.section ? true : false
         }
@@ -29,12 +29,6 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         
         return IndexSet(integersIn: lowestSection...highestSection)
         
-        UIView.animate(withDuration: 3.0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
-            
-            self.collectionView.reloadSections(IndexSet(integersIn: lowestSection...highestSection))
-//            self.collectionView.collectionViewLayout.invalidateLayout()
-            
-        }, completion: nil)
     }
     
     

@@ -64,6 +64,7 @@ class PhotosNavigationController: UINavigationController {
             let referenceIndexPath = referenceIndexPath {
             
             indexPathNavigatiable.navigate(to: destinationIndexPath, originFromVisibleContent:originFromVisibleContent)
+            momentsViewController.collectionView.reloadData()
             
             // get disappearing indexpaths
             let excludedPHAssets = momentsViewController.visiblePHAssets()

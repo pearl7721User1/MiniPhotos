@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MiniPhotos/Structures/ClusterPHAssetGroup.swift"
-            timestampString = "573223945.074042"
+            timestampString = "573226559.031992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -25,60 +25,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MiniPhotos/ViewControllers/PhotosNavigationController.swift"
-            timestampString = "573223945.074955"
+            filePath = "MiniPhotos/Animation/ZoomInAnimationController.swift"
+            timestampString = "573404026.042418"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "vector(startingRect:refRect:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MiniPhotos/ViewControllers/MomentsViewController.swift"
-            timestampString = "573223945.07557"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "visiblePHAssets()"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "animateTransition(using:)"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "MiniPhotos.MomentsViewController.visiblePHAssets() -&gt; Swift.Array&lt;__C.PHAsset&gt;"
+                  symbolName = "MiniPhotos.ZoomInPopupAnimationController.animateTransition(using: __C.UIViewControllerContextTransitioning) -&gt; ()"
                   moduleName = "MiniPhotos"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/seogiwon/MiniPhotos/MiniPhotos/ViewControllers/MomentsViewController.swift"
-                  timestampString = "573223946.496122"
+                  urlString = "file:///Users/seogiwon/MiniPhotos/MiniPhotos/Animation/ZoomInAnimationController.swift"
+                  timestampString = "573226328.736286"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "151"
-                  endingLineNumber = "151"
-                  offsetFromSymbolStart = "368">
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "2040">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Foundation.IndexPath) -&gt; __C.PHAsset in MiniPhotos.MomentsViewController.visiblePHAssets() -&gt; Swift.Array&lt;__C.PHAsset&gt;"
+                  symbolName = "closure #1 () -&gt; () in MiniPhotos.ZoomInPopupAnimationController.animateTransition(using: __C.UIViewControllerContextTransitioning) -&gt; ()"
                   moduleName = "MiniPhotos"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/seogiwon/MiniPhotos/MiniPhotos/ViewControllers/MomentsViewController.swift"
-                  timestampString = "573223946.501702"
+                  urlString = "file:///Users/seogiwon/MiniPhotos/MiniPhotos/Animation/ZoomInAnimationController.swift"
+                  timestampString = "573226328.7440211"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "151"
-                  endingLineNumber = "151"
-                  offsetFromSymbolStart = "36">
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "60">
                </Location>
             </Locations>
          </BreakpointContent>

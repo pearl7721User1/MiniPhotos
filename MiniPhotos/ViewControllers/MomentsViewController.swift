@@ -53,6 +53,19 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
         (self.navigationController as! PhotosNavigationController).zoomOut(to: phAssetOfInterest)
         
     }
+    
+    func reloadRequiredSections() -> IndexSet {
+        let visibleIndexPaths = self.collectionView.visibleIndexPaths()
+        let sectionAscendingIndexPaths = visibleIndexPaths.sorted { (lv, rv) -> Bool in
+            return lv.section <= rv.section ? true : false
+        }
+        
+        let lowestSection = sectionAscendingIndexPaths.first!.section
+        let highestSection = sectionAscendingIndexPaths.last!.section
+        
+        return IndexSet(integersIn: lowestSection...highestSection)
+        
+    }
 
     
     // MARK: - CollectionView Data Source
