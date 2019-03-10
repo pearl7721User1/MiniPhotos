@@ -71,22 +71,22 @@ class PhotosNavigationController: UINavigationController {
             let disappearingIndexPaths = momentsClusterViewController.visibleIndexPaths(excluding: excludedPHAssets)
             let transitionInfoForDisappearance = disappearingCellTransitionInfo(indexPaths: disappearingIndexPaths, refIndexPath: referenceIndexPath)
             
-            var movingIndexPathsForStarting: [IndexPath] {
-                var indexPaths = [IndexPath]()
+            var movingIndexPathsForStarting: [IndexPath?] {
+                var indexPaths = [IndexPath?]()
                 for (i,v) in excludedPHAssets.enumerated() {
-                    if let indexPath = momentsClusterViewController.indexPath(containing: v) {
-                        indexPaths.append(indexPath)
-                    }
+                    let indexPath = momentsClusterViewController.indexPath(containing: v)
+                    indexPaths.append(indexPath)
+                    
                 }
                 return indexPaths
             }
             
-            var movingIndexPathsForArriving: [IndexPath] {
-                var indexPaths = [IndexPath]()
+            var movingIndexPathsForArriving: [IndexPath?] {
+                var indexPaths = [IndexPath?]()
                 for (i,v) in excludedPHAssets.enumerated() {
-                    if let indexPath = momentsViewController.indexPath(containing: v) {
-                        indexPaths.append(indexPath)
-                    }
+                    let indexPath = momentsViewController.indexPath(containing: v)
+                    indexPaths.append(indexPath)
+                    
                 }
                 return indexPaths
             }
@@ -97,7 +97,6 @@ class PhotosNavigationController: UINavigationController {
             transitionInfo.scale = transitionInfoForDisappearance.scale
             transitionInfo.add(indexPathTransitionInfo: transitionInfoForDisappearance)
             transitionInfo.add(indexPathTransitionInfo: transitionInfoForMoving)
-            
             
             momentsClusterViewController.setDisappearingTransitionInfo(info: transitionInfo)
             
@@ -127,7 +126,7 @@ class PhotosNavigationController: UINavigationController {
         
     }
     
-    private func movingCellTransitionInfo(startingIndexPaths:[IndexPath], arrivingIndexPaths:[IndexPath]) -> IndexPathTransitionInfo {
+    private func movingCellTransitionInfo(startingIndexPaths:[IndexPath?], arrivingIndexPaths:[IndexPath?]) -> IndexPathTransitionInfo {
         
         let startingRects = momentsClusterViewController.rectsFromVisibleContent(indexPaths: startingIndexPaths)
         let arrivingRects = momentsViewController.rectsFromVisibleContent(indexPaths: arrivingIndexPaths)
@@ -136,12 +135,13 @@ class PhotosNavigationController: UINavigationController {
         var info = IndexPathTransitionInfo()
         for (i,v) in startingRects.enumerated() {
             
-            let startingRect = startingRects[i]
-            let arrivingRect = arrivingRects[i]
-            let startingIndexPath = startingIndexPaths[i]
-            
-            let theVector = vector(startingRect:startingRect, refRect:arrivingRect)
-            info.add(indexPath: startingIndexPath, vector: theVector)
+            if let startingRect = startingRects[i],
+                let arrivingRect = arrivingRects[i],
+                let startingIndexPath = startingIndexPaths[i] {
+                
+                let theVector = vector(startingRect:startingRect, refRect:arrivingRect)
+                info.add(indexPath: startingIndexPath, vector: theVector)
+            }
         }
         
         return info

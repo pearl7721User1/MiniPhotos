@@ -210,14 +210,17 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         return nil
     }
     
-    func rectsFromVisibleContent(indexPaths:[IndexPath]) -> [CGRect] {
+    func rectsFromVisibleContent(indexPaths:[IndexPath?]) -> [CGRect?] {
         
-        let rects = indexPaths.map { (indexPath) -> CGRect in
+        let rects = indexPaths.map { (indexPath) -> CGRect? in
             
-            let origin = self.collectionView.originFromVisibleContent(indexPath: indexPath)
-            let size = (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
-            
-            return CGRect(origin: origin, size: size)
+            if let indexPath = indexPath {
+                let origin = self.collectionView.originFromVisibleContent(indexPath: indexPath)
+                let size = (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+                return CGRect(origin: origin, size: size)
+            } else {
+                return nil
+            }
         }
         
         return rects
