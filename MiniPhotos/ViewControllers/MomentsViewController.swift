@@ -176,7 +176,7 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
                 return CGRect(origin: origin, size: size)
             } else {
                 return nil
-            }            
+            }
         }
         
         return rects
@@ -193,5 +193,9 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
         }
         
         return nil
+    }
+    
+    func setAppearingTransitionInfo(info: IndexPathTransitionInfo) {
+        (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).appearingTransitionInfo = info
     }
 }

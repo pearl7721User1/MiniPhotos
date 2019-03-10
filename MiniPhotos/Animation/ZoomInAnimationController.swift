@@ -41,7 +41,7 @@ class ZoomInPopupAnimationController: NSObject, UIViewControllerAnimatedTransiti
         toViewController.view.frame = finalFrame
         
         containerView.addSubview(toViewController.view)
-        toViewController.view.alpha = 0.0
+        toViewController.view.alpha = 0.8
         
         let reloadRequiredSectionsForFromVC = fromViewController.reloadRequiredSections()
         let reloadRequiredSectionsForToVC = toViewController.reloadRequiredSections()

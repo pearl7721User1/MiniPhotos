@@ -93,12 +93,8 @@ class PhotosNavigationController: UINavigationController {
             
             let transitionInfoForMoving = movingCellTransitionInfo(startingIndexPaths: movingIndexPathsForStarting, arrivingIndexPaths: movingIndexPathsForArriving)
             
-            var transitionInfo = IndexPathTransitionInfo()
-            transitionInfo.scale = transitionInfoForDisappearance.scale
-            transitionInfo.add(indexPathTransitionInfo: transitionInfoForDisappearance)
-            transitionInfo.add(indexPathTransitionInfo: transitionInfoForMoving)
-            
-            momentsClusterViewController.setDisappearingTransitionInfo(info: transitionInfo)
+            momentsViewController.setAppearingTransitionInfo(info: transitionInfoForMoving)
+            momentsClusterViewController.setDisappearingTransitionInfo(info: transitionInfoForDisappearance)
             
             
             // animation transform for background
@@ -143,6 +139,17 @@ class PhotosNavigationController: UINavigationController {
                 info.add(indexPath: startingIndexPath, vector: theVector)
             }
         }
+        
+        // add scale
+        var scale: CGSize {
+            
+            let startingThumbSize = (momentsClusterViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+            let destinationThumbSize = (momentsViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+            
+            return CGSize(width: startingThumbSize.width / destinationThumbSize.width, height: startingThumbSize.height / destinationThumbSize.height)
+        }
+        
+        info.scale = scale
         
         return info
     }

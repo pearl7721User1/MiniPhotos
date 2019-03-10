@@ -11,6 +11,7 @@ import UIKit
 
 class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    var appearingTransitionInfo: IndexPathTransitionInfo?
     var disappearingTransitionInfo: IndexPathTransitionInfo?
     var topOffset: CGFloat = 0
     
@@ -20,14 +21,13 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
             super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)?.copy()
                 as? UICollectionViewLayoutAttributes
         
-        if itemIndexPath.section <= 5 {
-//           print("initial, s: \(itemIndexPath.section) i:\(itemIndexPath.row), \(attr?.frame.origin.x), \(attr?.frame.origin.y)")
+        if let attr = attr,
+            let transitionInfo = self.appearingTransitionInfo,
+            let vector = transitionInfo.vector(for: itemIndexPath) {
+            
+            attr.center = attr.center.move(vector: vector)
+            attr.transform = CGAffineTransform(scaleX: transitionInfo.scale.width, y: transitionInfo.scale.height)
         }
-        
-        if let attr = attr {
-//            attr.center = CGPoint.zero
-        }
-        
         
         return attr;
     }
