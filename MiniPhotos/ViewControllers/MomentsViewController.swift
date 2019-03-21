@@ -195,7 +195,7 @@ class MomentsViewController: UIViewController, UICollectionViewDataSource, Index
         return nil
     }
     
-    func setAppearingTransitionInfo(info: IndexPathTransitionInfo) {
-        (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).appearingTransitionInfo = info
+    func setAppearingTransitionInfos(infos: [IndexPathTransitionInfo]) {
+        (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).appearingTransitionInfos = infos
     }
 }

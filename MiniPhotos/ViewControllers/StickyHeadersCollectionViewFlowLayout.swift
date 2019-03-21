@@ -11,9 +11,8 @@ import UIKit
 
 class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
-    var appearingTransitionInfo: IndexPathTransitionInfo?
-    var disappearingTransitionInfo: IndexPathTransitionInfo?
-    var topOffset: CGFloat = 0
+    var appearingTransitionInfos: [IndexPathTransitionInfo]?
+    var disappearingTransitionInfos: [IndexPathTransitionInfo]?
     
     override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
@@ -21,15 +20,27 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
             super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)?.copy()
                 as? UICollectionViewLayoutAttributes
         
-        if let attr = attr,
-            let transitionInfo = self.appearingTransitionInfo,
-            let vector = transitionInfo.vector(for: itemIndexPath) {
+        
+        if let transitionInfos = self.appearingTransitionInfos {
+            let filteredTransitionInfos = transitionInfos.filter{$0.indexPath == itemIndexPath}
             
-            attr.center = attr.center.move(vector: vector)
-            attr.transform = CGAffineTransform(scaleX: transitionInfo.scale.width, y: transitionInfo.scale.height)
+            if let transitionInfo = filteredTransitionInfos.first,
+                let attr = attr {
+                
+//                attr.frame = transitionInfo.fromRect
+                attr.center = attr.center.move(vector: transitionInfo.vector)
+                attr.transform = CGAffineTransform(scaleX: transitionInfo.scale.width, y: transitionInfo.scale.height)
+            }
         }
         
         return attr;
+    }
+    
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        let attr = super.layoutAttributesForItem(at: indexPath)
+        
+        
+        return attr
     }
     
     override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -38,14 +49,18 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
             super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)?.copy()
                 as? UICollectionViewLayoutAttributes
         
-        if let attr = attr,
-            let transitionInfo = self.disappearingTransitionInfo,
-            let vector = transitionInfo.vector(for: itemIndexPath) {
-            
-            attr.center = attr.center.move(vector: vector)
-            attr.transform = CGAffineTransform(scaleX: transitionInfo.scale.width, y: transitionInfo.scale.height)
-        }
         
+        if let transitionInfos = self.disappearingTransitionInfos {
+            let filteredTransitionInfos = transitionInfos.filter{$0.indexPath == itemIndexPath}
+            
+            if let transitionInfo = filteredTransitionInfos.first,
+                let attr = attr {
+                
+//                attr.frame = transitionInfo.fromRect
+                attr.center = attr.center.move(vector: transitionInfo.vector)
+                attr.transform = CGAffineTransform(scaleX: transitionInfo.scale.width, y: transitionInfo.scale.height)
+            }
+        }
         
         return attr;
     }
@@ -106,7 +121,7 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
         //        print("contentOffsetY:\(contentOffsetY), minimum: \(minimum), maximum: \(maximum)")
         
         
-        let newContentOffsetY = contentOffsetY + topOffset
+        let newContentOffsetY = contentOffsetY
         
         
         if newContentOffsetY < minimum {

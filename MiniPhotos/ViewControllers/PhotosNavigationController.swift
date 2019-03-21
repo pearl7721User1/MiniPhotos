@@ -91,10 +91,10 @@ class PhotosNavigationController: UINavigationController {
                 return indexPaths
             }
             
-            let transitionInfoForMoving = movingCellTransitionInfo(startingIndexPaths: movingIndexPathsForStarting, arrivingIndexPaths: movingIndexPathsForArriving)
+            let transitionInfoForMovings = movingCellTransitionInfo(startingIndexPaths: movingIndexPathsForStarting, arrivingIndexPaths: movingIndexPathsForArriving)
             
-            momentsViewController.setAppearingTransitionInfo(info: transitionInfoForMoving)
-            momentsClusterViewController.setDisappearingTransitionInfo(info: transitionInfoForDisappearance)
+            momentsViewController.setAppearingTransitionInfos(infos: transitionInfoForMovings)
+            momentsClusterViewController.setDisappearingTransitionInfos(infos: transitionInfoForDisappearance)
             
             
             // animation transform for background
@@ -122,39 +122,38 @@ class PhotosNavigationController: UINavigationController {
         
     }
     
-    private func movingCellTransitionInfo(startingIndexPaths:[IndexPath?], arrivingIndexPaths:[IndexPath?]) -> IndexPathTransitionInfo {
+    private func movingCellTransitionInfo(startingIndexPaths:[IndexPath?], arrivingIndexPaths:[IndexPath?]) -> [IndexPathTransitionInfo] {
         
         let startingRects = momentsClusterViewController.rectsFromVisibleContent(indexPaths: startingIndexPaths)
         let arrivingRects = momentsViewController.rectsFromVisibleContent(indexPaths: arrivingIndexPaths)
         
+        var indexPathTransitionInfo = [IndexPathTransitionInfo]()
         
-        var info = IndexPathTransitionInfo()
         for (i,v) in startingRects.enumerated() {
             
             if let startingRect = startingRects[i],
                 let arrivingRect = arrivingRects[i],
-                let startingIndexPath = startingIndexPaths[i] {
+                let arrivingIndexPath = arrivingIndexPaths[i] {
                 
-                let theVector = vector(startingRect:startingRect, refRect:arrivingRect)
-                info.add(indexPath: startingIndexPath, vector: theVector)
+                let theVector = vector(startingRect:arrivingRect, refRect:startingRect)
+                
+                let startingThumbSize = (momentsClusterViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+                let destinationThumbSize = (momentsViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+                
+                let scale = CGSize(width: startingThumbSize.width / destinationThumbSize.width, height: startingThumbSize.height / destinationThumbSize.height)
+                
+//                let fromRect = momentsClusterViewController.collectionView.layoutAttributesForItem(at: v).frame
+                
+                let transitionInfo = IndexPathTransitionInfo(indexPath: arrivingIndexPath, vector: theVector, scale: scale, fromRect: CGRect.zero)
+                
+                indexPathTransitionInfo.append(transitionInfo)
             }
         }
         
-        // add scale
-        var scale: CGSize {
-            
-            let startingThumbSize = (momentsClusterViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
-            let destinationThumbSize = (momentsViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
-            
-            return CGSize(width: startingThumbSize.width / destinationThumbSize.width, height: startingThumbSize.height / destinationThumbSize.height)
-        }
-        
-        info.scale = scale
-        
-        return info
+        return indexPathTransitionInfo
     }
     
-    private func disappearingCellTransitionInfo(indexPaths:[IndexPath], refIndexPath:IndexPath) -> IndexPathTransitionInfo {
+    private func disappearingCellTransitionInfo(indexPaths:[IndexPath], refIndexPath:IndexPath) -> [IndexPathTransitionInfo] {
         
         var refRect: CGRect {
             if let attributeItem = momentsClusterViewController.collectionView.collectionViewLayout.layoutAttributesForItem(at: refIndexPath) {
@@ -164,30 +163,29 @@ class PhotosNavigationController: UINavigationController {
             }
         }
         
-        var info = IndexPathTransitionInfo()
+        var infos = [IndexPathTransitionInfo]()
         
         for (i,v) in indexPaths.enumerated() {
             if let item = momentsClusterViewController.collectionView.collectionViewLayout.layoutAttributesForItem(at: v) {
                 
                 let vector = reverseVector(boundary: momentsClusterViewController.collectionView.bounds, startingRect: item.frame, refRect: refRect)
                 
-                info.add(indexPath: v, vector: vector)
+                let startingThumbSize = (momentsClusterViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+                let destinationThumbSize = (momentsViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
+                
+                let size = CGSize(width: destinationThumbSize.width / startingThumbSize.width, height: destinationThumbSize.height / startingThumbSize.height)
+                
+                
+//                let fromRect = momentsClusterViewController.collectionView.layoutAttributesForItem(at: v).frame
+                
+                let transitionInfo = IndexPathTransitionInfo(indexPath: v, vector: vector, scale: size, fromRect: CGRect.zero)
+                
+                infos.append(transitionInfo)
+                
             }
         }
         
-        // add scale
-        var scale: CGSize {
-          
-            let startingThumbSize = (momentsClusterViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
-            let destinationThumbSize = (momentsViewController.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).itemSize
-                
-            return CGSize(width: destinationThumbSize.width / startingThumbSize.width, height: destinationThumbSize.height / startingThumbSize.height)
-        }
-
-        info.scale = scale
-        
-        
-        return info
+        return infos
     }
     
     private func reverseVector(boundary:CGRect, startingRect:CGRect, refRect:CGRect) -> GiwonVector {

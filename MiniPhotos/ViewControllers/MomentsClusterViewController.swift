@@ -33,17 +33,35 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     
     
     @IBAction func barButton1Tapped(_ sender: UIBarButtonItem) {
-        
-        
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: [.left, .top], animated: false)
-        
+        collectionView.collectionViewType = .MomentsCluster
     }
     
     @IBAction func barButton2Tapped(_ sender: UIBarButtonItem) {
-   
+        
+        let disLayout = DisappearingTransitionLayout()
+        disLayout.itemSize = CGSize(width: 32, height: 32)
+        disLayout.minimumLineSpacing = 0
+        disLayout.minimumInteritemSpacing = 0
+        disLayout.headerReferenceSize = CGSize(width: 50, height: 50)
+        
+        collectionView.setCollectionViewLayout(disLayout, animated: true)
+        
+        /*
+        UIView.animate(withDuration: 3.0, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
+            
+            self.collectionView.reloadSections(self.reloadRequiredSections())
+            
+        }, completion: { (finished) in
+            
+        })
+        */
+        
     }
     
     private func describe(indexPath: IndexPath, layout: UICollectionViewLayout) {
+        
+        
+        
         
         print("=========================")
         if let dis = layout.finalLayoutAttributesForDisappearingItem(at: indexPath) {
@@ -226,8 +244,8 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         return rects
     }
     
-    func setDisappearingTransitionInfo(info: IndexPathTransitionInfo) {
-        (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).disappearingTransitionInfo = info
+    func setDisappearingTransitionInfos(infos: [IndexPathTransitionInfo]) {
+        (self.collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).disappearingTransitionInfos = infos
     }
     
     private func saveImages(from phAssetGroups:[FilteredClusterPHAssetGroup], to cache:NSCache<NSString, UIImage>) {

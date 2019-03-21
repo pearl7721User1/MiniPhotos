@@ -13,7 +13,6 @@
 		EE20F9AA2228E5E90006225D /* GiwonVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9A72228E5E80006225D /* GiwonVector.swift */; };
 		EE20F9AB2228E5E90006225D /* VectorCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9A82228E5E80006225D /* VectorCalculator.swift */; };
 		EE20F9AD2228E7040006225D /* IndexPathTransitionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9AC2228E7040006225D /* IndexPathTransitionInfo.swift */; };
-		EE20F9AF22292D9A0006225D /* SampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9AE22292D9A0006225D /* SampleViewController.swift */; };
 		EE33AA3D220FDC9400E0BE8C /* ZoomInAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE33AA3C220FDC9400E0BE8C /* ZoomInAnimationController.swift */; };
 		EECAC50821BD1CFB000FEA4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */; };
 		EECAC50D21BD1CFB000FEA4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EECAC50B21BD1CFB000FEA4F /* Main.storyboard */; };
@@ -28,9 +27,10 @@
 		EECAC53421BEA003000FEA4F /* MomentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC53321BEA003000FEA4F /* MomentsViewController.swift */; };
 		EECAC53621BEA00E000FEA4F /* GridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC53521BEA00E000FEA4F /* GridViewCell.swift */; };
 		EECAC53821BEA024000FEA4F /* MomentsCommonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC53721BEA024000FEA4F /* MomentsCommonCollectionView.swift */; };
-		EECAC53A21BEA02C000FEA4F /* StickyHeadersCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC53921BEA02C000FEA4F /* StickyHeadersCollectionViewLayout.swift */; };
+		EECAC53A21BEA02C000FEA4F /* StickyHeadersCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC53921BEA02C000FEA4F /* StickyHeadersCollectionViewFlowLayout.swift */; };
 		EECAC53C21BEA0E5000FEA4F /* ViewForPermissionUnavailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC53B21BEA0E4000FEA4F /* ViewForPermissionUnavailable.swift */; };
 		EECAC54021BEAAFE000FEA4F /* PhotoLibraryPermissionCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECAC53F21BEAAFE000FEA4F /* PhotoLibraryPermissionCheckViewController.swift */; };
+		EEEC2FFF2244054E00402FA3 /* DisappearingTransitionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC2FFE2244054E00402FA3 /* DisappearingTransitionLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,6 @@
 		EE20F9A72228E5E80006225D /* GiwonVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiwonVector.swift; sourceTree = "<group>"; };
 		EE20F9A82228E5E80006225D /* VectorCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorCalculator.swift; sourceTree = "<group>"; };
 		EE20F9AC2228E7040006225D /* IndexPathTransitionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathTransitionInfo.swift; sourceTree = "<group>"; };
-		EE20F9AE22292D9A0006225D /* SampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewController.swift; sourceTree = "<group>"; };
 		EE33AA3C220FDC9400E0BE8C /* ZoomInAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomInAnimationController.swift; sourceTree = "<group>"; };
 		EECAC50421BD1CFB000FEA4F /* MiniPhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniPhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EECAC50721BD1CFB000FEA4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,9 +68,10 @@
 		EECAC53321BEA003000FEA4F /* MomentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentsViewController.swift; sourceTree = "<group>"; };
 		EECAC53521BEA00E000FEA4F /* GridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewCell.swift; sourceTree = "<group>"; };
 		EECAC53721BEA024000FEA4F /* MomentsCommonCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentsCommonCollectionView.swift; sourceTree = "<group>"; };
-		EECAC53921BEA02C000FEA4F /* StickyHeadersCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyHeadersCollectionViewLayout.swift; sourceTree = "<group>"; };
+		EECAC53921BEA02C000FEA4F /* StickyHeadersCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyHeadersCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		EECAC53B21BEA0E4000FEA4F /* ViewForPermissionUnavailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewForPermissionUnavailable.swift; sourceTree = "<group>"; };
 		EECAC53F21BEAAFE000FEA4F /* PhotoLibraryPermissionCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPermissionCheckViewController.swift; sourceTree = "<group>"; };
+		EEEC2FFE2244054E00402FA3 /* DisappearingTransitionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisappearingTransitionLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,8 +173,8 @@
 				EECAC52F21BE9FCD000FEA4F /* MomentsClusterViewController.swift */,
 				EECAC53321BEA003000FEA4F /* MomentsViewController.swift */,
 				EECAC53721BEA024000FEA4F /* MomentsCommonCollectionView.swift */,
-				EECAC53921BEA02C000FEA4F /* StickyHeadersCollectionViewLayout.swift */,
-				EE20F9AE22292D9A0006225D /* SampleViewController.swift */,
+				EECAC53921BEA02C000FEA4F /* StickyHeadersCollectionViewFlowLayout.swift */,
+				EEEC2FFE2244054E00402FA3 /* DisappearingTransitionLayout.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -293,7 +293,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EECAC53A21BEA02C000FEA4F /* StickyHeadersCollectionViewLayout.swift in Sources */,
+				EECAC53A21BEA02C000FEA4F /* StickyHeadersCollectionViewFlowLayout.swift in Sources */,
+				EEEC2FFF2244054E00402FA3 /* DisappearingTransitionLayout.swift in Sources */,
 				EECAC53421BEA003000FEA4F /* MomentsViewController.swift in Sources */,
 				EE20F9A92228E5E90006225D /* CGPointExtension.swift in Sources */,
 				EE05BD1A21DC46F7007011F9 /* StructBehaviors.swift in Sources */,
@@ -303,7 +304,6 @@
 				EECAC52C21BE9FBD000FEA4F /* MomentsPHAssetGroup.swift in Sources */,
 				EECAC53221BE9FCE000FEA4F /* MomentsClusterViewController.swift in Sources */,
 				EECAC53121BE9FCE000FEA4F /* PhotosNavigationModelProvider.swift in Sources */,
-				EE20F9AF22292D9A0006225D /* SampleViewController.swift in Sources */,
 				EECAC53821BEA024000FEA4F /* MomentsCommonCollectionView.swift in Sources */,
 				EE20F9AD2228E7040006225D /* IndexPathTransitionInfo.swift in Sources */,
 				EECAC53C21BEA0E5000FEA4F /* ViewForPermissionUnavailable.swift in Sources */,
