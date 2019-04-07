@@ -1,4 +1,9 @@
 # MiniPhotos
+This project is my own study to get to the bottom of zoom in/out effect transition animations implemented in Apple Photos app.
+<p align="center">
+<img src="https://user-images.githubusercontent.com/18760280/55679056-4d86c380-593f-11e9-8e4d-a4a456ed8395.gif">
+</p>
+
 
 ## Collection View’s datasource composition
 <p align="center">
