@@ -37,6 +37,23 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
     }
     
     @IBAction func barButton2Tapped(_ sender: UIBarButtonItem) {
+        /*
+        let vector = GiwonVector(pointer: CGPoint(x:30,y:0), magnitude: 200)
+        
+        let t1 = IndexPathTransitionInfo(indexPath:IndexPath(item: 0, section:4), vector: vector, scale: CGSize(width:2.0, height:2.0), fromRect: CGRect.zero)
+        let t2 = IndexPathTransitionInfo(indexPath:IndexPath(item: 1, section:4), vector: vector, scale: CGSize(width:2.0, height:2.0), fromRect: CGRect.zero)
+        let t3 = IndexPathTransitionInfo(indexPath:IndexPath(item: 2, section:4), vector: vector, scale: CGSize(width:2.0, height:2.0), fromRect: CGRect.zero)
+        
+        (collectionView.collectionViewLayout as! StickyHeadersCollectionViewFlowLayout).disappearingTransitionInfos = [t1, t2, t3]
+        
+        UIView.animate(withDuration: 10.0, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
+            
+            self.collectionView.reloadSections(IndexSet(integersIn: 4...4))
+            
+        }, completion: nil)
+        
+        */
+        
         
         let disLayout = DisappearingTransitionLayout()
         disLayout.itemSize = CGSize(width: 32, height: 32)
@@ -44,17 +61,20 @@ class MomentsClusterViewController: UIViewController, UICollectionViewDataSource
         disLayout.minimumInteritemSpacing = 0
         disLayout.headerReferenceSize = CGSize(width: 50, height: 50)
         
-        collectionView.setCollectionViewLayout(disLayout, animated: true)
         
-        /*
         UIView.animate(withDuration: 3.0, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: [], animations: {
             
-            self.collectionView.reloadSections(self.reloadRequiredSections())
+            self.collectionView.setCollectionViewLayout(disLayout, animated: false)
+            self.collectionView.reloadSections(IndexSet(integersIn: 5...5))
+            //self.collectionView.reloadSections(self.reloadRequiredSections())
             
         }, completion: { (finished) in
             
         })
-        */
+        
+        
+        
+//        self.collectionView.reloadItems(at:[IndexPath(item: 0, section: 5)])
         
     }
     

@@ -14,6 +14,24 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var appearingTransitionInfos: [IndexPathTransitionInfo]?
     var disappearingTransitionInfos: [IndexPathTransitionInfo]?
     
+    override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+        
+        let a = updateItems
+        
+        super.prepare(forCollectionViewUpdates: updateItems)
+        
+        
+    }
+    
+    override func prepareForTransition(to newLayout: UICollectionViewLayout) {
+        
+        let layout = newLayout
+        
+        
+    }
+    
+    
+    
     override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
         let attr =
@@ -50,11 +68,14 @@ class StickyHeadersCollectionViewFlowLayout: UICollectionViewFlowLayout {
                 as? UICollectionViewLayoutAttributes
         
         
+        
         if let transitionInfos = self.disappearingTransitionInfos {
             let filteredTransitionInfos = transitionInfos.filter{$0.indexPath == itemIndexPath}
             
             if let transitionInfo = filteredTransitionInfos.first,
                 let attr = attr {
+                
+                
                 
 //                attr.frame = transitionInfo.fromRect
                 attr.center = attr.center.move(vector: transitionInfo.vector)
